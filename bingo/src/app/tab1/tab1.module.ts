@@ -6,15 +6,18 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
+import { SchedaComponent } from "../components/scheda/scheda.component";
+import { SchedeComponent } from '../components/schede/schede.component';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    Tab1PageRoutingModule
-  ],
-  declarations: [Tab1Page]
+    declarations: [Tab1Page, SchedaComponent, SchedeComponent],
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ExploreContainerComponentModule,
+        Tab1PageRoutingModule,
+        
+    ]
 })
 export class Tab1PageModule {}
