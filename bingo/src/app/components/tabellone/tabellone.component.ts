@@ -11,6 +11,8 @@ export class TabelloneComponent implements OnInit {
   estratto: number=0;
   numeri: number[]=[];
   estratti: boolean[]=[];
+  timeLeft: number = 3;
+  interval?: any;
   
 
   constructor(public bossolo: BossoloService) { 
@@ -21,10 +23,23 @@ export class TabelloneComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.startTimer();
   }
 
   estrazione(): void{
     this.estratto=this.bossolo.estraiNumero();
     window.location.reload;
+  }
+
+  startTimer():void {
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        this.timeLeft--;
+        console.log("tempo"+this.timeLeft);
+      } else {
+        this.timeLeft = 3;
+        this.estrazione();
+      }
+    },1000)
   }
 }
