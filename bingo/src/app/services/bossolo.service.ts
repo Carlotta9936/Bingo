@@ -12,9 +12,10 @@ export class BossoloService {
   constructor() {
     //creo un array con tutti i numeri estraibili 
     //e inizializzo il tabellone a true
-      for(let i=1;i<=91;i++){
+      for(let i=1;i<=90;i++){
         this.bossolo.push(i);
         this.tabellone.push(false);
+        console.log("i"+i);
       }
    }
 
