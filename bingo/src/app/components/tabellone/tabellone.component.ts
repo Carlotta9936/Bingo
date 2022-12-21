@@ -14,7 +14,7 @@ export class TabelloneComponent implements OnInit {
   
 
   constructor(public bossolo: BossoloService) { 
-    for(let i=1;i<=91;i++){
+    for(let i=1;i<=90;i++){
       this.numeri.push(i);
     }
     this.estratti=this.bossolo.tabellone;

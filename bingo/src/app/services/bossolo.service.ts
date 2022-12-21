@@ -20,7 +20,7 @@ export class BossoloService {
 
 
   estraiNumero(): number{
-    let index=Math.floor(Math.random() * (this.bossolo.length) + 1);
+    let index=Math.floor(Math.random() * (this.bossolo.length));
     let numero= this.bossolo[index];
     this.segnaNumero(numero);
     console.log("estratto "+ index+ " numero"+ numero);
