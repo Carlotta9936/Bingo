@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Database, set, ref, update } from '@angular/fire/database'; 
+import { DatabaseService } from '../services/database.service';
+
 
 @Component({
   selector: 'app-registrazione',
@@ -8,20 +9,14 @@ import { Database, set, ref, update } from '@angular/fire/database';
 })
 export class RegistrazionePage implements OnInit {
 
-  constructor(public database: Database) { }
+  constructor(public database: DatabaseService) { }
 
   ngOnInit() {
   }
 
   registerUser(value: any): any{
-    set(ref(this.database, 'users/' + value.username), {
-      username: value.username,
-      password: value.password,
-      nome: value.nome,
-      cognome: value.cognome,
-      crediti: 0,
-    })
+    console.log("QUI");
+    this.database.creaUtente(value.username, value.password, value.nome, value.cognome);
   }
-
 
 }
