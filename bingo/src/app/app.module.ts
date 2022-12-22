@@ -13,9 +13,18 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), provideAuth(() => getAuth()), provideDatabase(() => getDatabase()), provideFirestore(() => getFirestore()), provideRemoteConfig(() => getRemoteConfig())],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
+    provideAuth(() => getAuth()), 
+    provideDatabase(() => getDatabase()), 
+    provideFirestore(() => getFirestore()), 
+    provideRemoteConfig(() => getRemoteConfig()),
+    HttpClientModule
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

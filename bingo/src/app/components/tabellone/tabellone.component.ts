@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BossoloService } from 'src/app/services/bossolo.service';
+import { HttpClient } from '@angular/common/http';
+import { Partita } from 'src/app/interfaces/Partita';
 
 @Component({
   selector: 'app-tabellone',
@@ -15,7 +17,7 @@ export class TabelloneComponent implements OnInit {
   interval?: any;
   
 
-  constructor(public bossolo: BossoloService) { 
+  constructor(public bossolo: BossoloService, private http: HttpClient) { 
     for(let i=1;i<=90;i++){
       this.numeri.push(i);
       console.log("costruttore"+i);
@@ -29,6 +31,16 @@ export class TabelloneComponent implements OnInit {
 
   estrazione(): void{
     this.estratto=this.bossolo.estraiNumero();
+    let stato: Partita = {
+      ultimoNumero: this.estratto, 
+      fine: false
+    };
+
+    this.http.put<Partita>('http://localhost:3000/partita', stato)
+      .subscribe(data=> {
+        console.log("D: " + data);
+        data.ultimoNumero = stato.ultimoNumero;
+      })
     window.location.reload;
   }
 

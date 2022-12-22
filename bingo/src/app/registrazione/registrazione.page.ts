@@ -15,7 +15,6 @@ export class RegistrazionePage implements OnInit {
   }
 
   registerUser(value: any): any{
-    console.log("QUI");
     this.database.creaUtente(value.username, value.password, value.nome, value.cognome);
   }
 
