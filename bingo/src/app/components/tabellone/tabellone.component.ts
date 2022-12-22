@@ -48,7 +48,7 @@ export class TabelloneComponent implements OnInit {
     this.interval = setInterval(() => {
       if(this.timeLeft > 0) {
         this.timeLeft--;
-        console.log("tempo"+this.timeLeft);
+        //console.log("tempo"+this.timeLeft);
       } else {
         this.timeLeft = 3;
         this.estrazione();
