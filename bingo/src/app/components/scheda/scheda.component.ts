@@ -84,5 +84,22 @@ export class SchedaComponent implements OnInit {
     })
   }
 
+
+  onCasellaSegnata(value: any): void{
+    console.log(value);
+    this.numeri.forEach((numero: number, index: number) => {
+      if(numero === value){
+        this.numeri.splice(index, 1);
+        if(this.numeri.length===0){
+          this.bingo();
+        }
+      }
+    })
+  }
+
+  bingo(): void {
+    //Dovrà abilitare il bottone bingo
+    console.log("BINGOOOOOO");
+  }
   
 }

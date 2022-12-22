@@ -1,6 +1,7 @@
 {
   "partita": {
-    "ultimoNumero": 49,
-    "fine": false
+    "numeriEstratti": 1,
+    "cinquina": null,
+    "bingo": null
   }
 }

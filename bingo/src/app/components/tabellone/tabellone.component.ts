@@ -13,6 +13,11 @@ export class TabelloneComponent implements OnInit {
   estratto: number=0;
   numeri: number[]=[];
   estratti: boolean[]=[];
+  numeriEstratti: number = 0;
+
+  cinquina: null | string = null;
+  bingo: null | string = null;
+
   timeLeft: number = 3;
   interval?: any;
   
@@ -33,7 +38,9 @@ export class TabelloneComponent implements OnInit {
     this.estratto=this.bossolo.estraiNumero();
     let stato: Partita = {
       ultimoNumero: this.estratto, 
-      fine: false
+      numeriEstratti: this.numeriEstratti+1,
+      cinquina: this.cinquina,
+      bingo: this.bingo
     };
 
     this.http.put<Partita>('http://localhost:3000/partita', stato)

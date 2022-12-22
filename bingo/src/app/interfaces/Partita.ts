@@ -1,4 +1,6 @@
 export interface Partita {
     ultimoNumero: number;
-    fine: boolean;
+    numeriEstratti: number;
+    cinquina: null | string;
+    bingo: null | string;
 }
