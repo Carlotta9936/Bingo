@@ -9,17 +9,22 @@ import { SchedaService } from '../../services/scheda.service';
 export class SchedaComponent implements OnInit {
 
   numeri: number[] = [];
+  caselle: number[] = [];
 
   constructor(public scheda: SchedaService) {
    }
 
   ngOnInit() {
     this.getScheda();
+    this.caselle = this.aggiungiVuote(this.numeri);
   }
 
   getScheda(): any{
-    console.log("waaa")
     this.numeri = this.scheda.getNumeriCartella();
     console.log("N:" + this.numeri);
+  }
+
+  aggiungiVuote(numeri: number[]): any{
+
   }
 }

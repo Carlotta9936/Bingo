@@ -6,13 +6,12 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SchedaComponent } from './components/scheda/scheda.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +21,7 @@ import { SchedaComponent } from './components/scheda/scheda.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

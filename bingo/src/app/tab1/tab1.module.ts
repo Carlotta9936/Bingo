@@ -8,9 +8,10 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { SchedaComponent } from "../components/scheda/scheda.component";
 import { SchedeComponent } from '../components/schede/schede.component';
+import { CasellaComponent } from '../components/casella/casella.component';
 
 @NgModule({
-    declarations: [Tab1Page, SchedaComponent, SchedeComponent],
+    declarations: [Tab1Page, SchedaComponent, SchedeComponent, CasellaComponent],
     imports: [
         IonicModule,
         CommonModule,

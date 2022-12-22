@@ -70,10 +70,11 @@ export class SchedaService {
     numeriOrdinati.push(minore);
     numeri.splice(indexMinore, 1);
     }
-    
-    
     return numeriOrdinati;
+  }
 
+  getDecimaliMancanti(numeri: number[]): any {
+    
   }
 
 }
