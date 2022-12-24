@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>creaPartita</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="scelta" *ngIf="pubblica === undefined">
+    <ion-button classe="tipo" (click)="setPublic()"> Pubblica </ion-button>
+    <ion-button classe="tipo" (click)="setPrivate()"> Privata </ion-button>
+  </div>
+
+  <div class="attesa" *ngIf="pubblica !== undefined">
+    <p> Codice: {{codice}} </p>
+  </div>
+</ion-content>
