@@ -1,5 +1,6 @@
 {
   "partita": {
+    "ultimoNumero": 30,
     "numeriEstratti": 1,
     "cinquina": null,
     "bingo": null

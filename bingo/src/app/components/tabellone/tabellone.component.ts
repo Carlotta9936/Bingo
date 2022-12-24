@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BossoloService } from 'src/app/services/bossolo.service';
 import { HttpClient } from '@angular/common/http';
 import { Partita } from 'src/app/interfaces/Partita';
+import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'app-tabellone',
@@ -22,7 +23,7 @@ export class TabelloneComponent implements OnInit {
   interval?: any;
   
 
-  constructor(public bossolo: BossoloService, private http: HttpClient) { 
+  constructor(public bossolo: BossoloService, private http: HttpClient, public timer:TimerService) { 
     for(let i=1;i<=90;i++){
       this.numeri.push(i);
       console.log("costruttore"+i);
@@ -31,6 +32,7 @@ export class TabelloneComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("VAI");
     this.startTimer();
   }
 
@@ -48,6 +50,9 @@ export class TabelloneComponent implements OnInit {
         console.log("D: " + data);
         data.ultimoNumero = stato.ultimoNumero;
       })
+
+      console.log("Estrazione");
+
     window.location.reload;
   }
 
@@ -62,4 +67,10 @@ export class TabelloneComponent implements OnInit {
       }
     },1000)
   }
+
+  /*startTimer(): void {
+    this.timer.startTimer(3);
+    console.log("Estrazione");
+    this.estrazione();
+  }*/
 }
