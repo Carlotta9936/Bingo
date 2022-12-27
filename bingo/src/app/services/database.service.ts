@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
 import { collection, doc, docData, Firestore } from '@angular/fire/firestore';
 import { DataServiceService } from './data-service.service';
-import { getDatabase, set, ref } from "firebase/database";
+import { getDatabase, set, ref, onValue } from "firebase/database";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,14 @@ export class DatabaseService {
     });
     alert('user created');
   }
+
+  async login(username: string, password: string): Promise<any>{    
+    const user = ref(this.database, 'users/'+ username);
+    onValue(user, (snapshot) => {
+      const u = snapshot.val();
+      console.log(u);
+      return u;
+    });
+
+  } 
 }

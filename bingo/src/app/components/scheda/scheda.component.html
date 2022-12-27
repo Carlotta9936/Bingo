@@ -1,3 +1,5 @@
 <div id="cartella">
-    <app-casella *ngFor="let numero of numeri" [numero]="numero"> {{numero}} </app-casella>
+    <app-casella *ngFor="let casella of caselle" [numero]="casella.numero" [stato]="casella.stato" (segnato)="onCasellaSegnata($event)"> 
+        {{casella.numero}} 
+    </app-casella>
 </div>

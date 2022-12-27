@@ -18,4 +18,8 @@ export class SchedeComponent implements OnInit {
     this.numeroSchede.push(0);
   }
 
+
+  fine(): void {
+    
+  }
 }

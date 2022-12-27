@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Casella } from 'src/app/interfaces/Casella';
 
 @Component({
   selector: 'app-casella',
@@ -6,11 +7,22 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./casella.component.scss'],
 })
 export class CasellaComponent implements OnInit {
-  @Input() numero: number = 0;
-  @Input() stato: "vuota" | "numero" | "estratta" | "segnata" = "vuota";
+  @Input() numero?: number;
+  @Input() stato?: "vuota" | "numero" | "estratta" | "segnata";
+
+  @Output() segnato = new EventEmitter<number>()
 
   constructor() { }
 
   ngOnInit() {}
+
+  segna(): void {
+    this.stato = "segnata";
+    this.mandaSegnato();
+  }
+
+  mandaSegnato(){
+    this.segnato.emit(this.numero);
+  }
 
 }
