@@ -8,8 +8,9 @@
 
 <ion-content [fullscreen]="true">
   <ion-card id="crea">
-    <ion-button>crea partita</ion-button>
+    <ion-button [routerLink]="['../../crea-partita']">Crea Partita</ion-button>
   </ion-card>
+  <br>
   <br>
   <ion-card id="pubbliche">
     <ion-grid [fixed]="true">
@@ -25,8 +26,9 @@
       </ion-row>
     </ion-grid>
   </ion-card>
+  <br>
+  <br>
   <ion-card id="privata">
-    <ion-title id="title">Entra in una partita privata</ion-title>
     <ion-searchbar animated="true" placeholder="Inserisci qui il codice della partita"></ion-searchbar>
   </ion-card>
   <!--<app-tabellone></app-tabellone>

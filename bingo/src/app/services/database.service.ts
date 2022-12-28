@@ -4,6 +4,8 @@ import { collection, doc, docData, Firestore } from '@angular/fire/firestore';
 import { DataServiceService } from './data-service.service';
 import { getDatabase, set, ref, onValue } from "firebase/database";
 import { Observable } from 'rxjs';
+import { PartitaData } from '../interfaces/PartitaData';
+import { serialize } from 'v8';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,17 @@ export class DatabaseService {
       crediti: 50
     });
     alert('user created');
+  }
+
+  creaPartita(partita: PartitaData){
+    set(ref(this.database, 'partita/'+partita.codice),{
+      pubblica: partita.pubblica,
+      codice: partita.codice,
+      numPartecipanti: partita.numPartecipanti,
+      ip: partita.ip,
+      proprietario: partita.proprietario
+    });
+    alert('partita creata');
   }
 
   async login(username: string, password: string): Promise<any>{    
