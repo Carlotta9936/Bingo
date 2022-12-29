@@ -6,8 +6,7 @@ import { DataServiceService } from './data-service.service';
 import { getDatabase, set, ref, onValue } from "firebase/database";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { PartitaData } from '../interfaces/PartitaData';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class DatabaseService {
   users?: User[];
   database;
 
-  constructor(private firestore: Firestore, private dataService: DataServiceService, public http: HttpClient) { 
+  constructor(private firestore: Firestore, private dataService: DataServiceService) { 
     this.database = getDatabase();
   }
 
@@ -32,6 +31,17 @@ export class DatabaseService {
       crediti: 50
     });
     alert('user created');
+  }
+
+  creaPartita(partita: PartitaData){
+    set(ref(this.database, 'partita/'+partita.codice),{
+      pubblica: partita.pubblica,
+      codice: partita.codice,
+      numPartecipanti: partita.numPartecipanti,
+      ip: partita.ip,
+      proprietario: partita.proprietario
+    });
+    alert('partita creata');
   }
 
   async login(username: string, password: string): Promise<any>{    
