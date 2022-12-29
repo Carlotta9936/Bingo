@@ -34,10 +34,21 @@ export class CreaPartitaPage implements OnInit {
   }
 
   //Crea partita del DB
-  creaPartitaDB(): void {
+  async creaPartitaDB(): Promise<void> {
     this.codice = this.crea.creaCodice();
+      console.log("1")
+      const ipAddress = await this.getIPAddress();
+      console.log(`Your IP address is: ${ipAddress}`);
+
   }
 
 
+  async getIPAddress(): Promise<string> {
+    console.log("async")
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  }
+ 
 
 }
