@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CreaPartitaService } from '../services/crea-partita.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,7 +8,11 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(public crea: CreaPartitaService) {}
+
+  prova():void{
+    console.log("prova");
+  }
 
   
 

@@ -6,6 +6,11 @@ import { PartitaData } from '../interfaces/PartitaData';
   providedIn: 'root'
 })
 export class CreaPartitaService {
+
+  pubblica?: boolean;
+  codice: string = "";
+
+
   constructor(public database: DatabaseService) { }
 
   creaPartita(ip: string, proprietario: string, pubblica: boolean): any{
@@ -35,5 +40,25 @@ export class CreaPartitaService {
   getRandomChar(): string {
     const code = Math.floor(Math.random() * (90 - 65 + 1)) + 65;
     return String.fromCharCode(code);
+  }
+
+
+  //Setta la partita in modalità pubblica
+  setPublic():void {
+    console.log("pubblica");
+    this.pubblica = true;
+    this.codice=this.creaCodice();
+  }
+
+  //Setta la partita in modalità privata
+  setPrivate(): void{
+    this.pubblica = false;
+    this.codice=this.creaCodice();
+    console.log("privata");
+  }
+
+  resettaCodice(): void{
+    console.log("ciao");
+    this.codice='';
   }
 }

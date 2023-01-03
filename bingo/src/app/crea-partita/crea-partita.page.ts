@@ -8,24 +8,27 @@ import { CreaPartitaService } from '../services/crea-partita.service';
 })
 export class CreaPartitaPage implements OnInit {
 
-  pubblica?: boolean;
-  codice: string = "";
+  
+  
 
   constructor(public crea:CreaPartitaService) { }
 
   ngOnInit() {
   }
 
+  /*
   //Setta la partita in modalità pubblica
   setPublic():void {
     this.pubblica = true;
     this.creaPartitaDB();
+    console.log("pubblica");
   }
   
   //Setta la partita in modalità privata
   setPrivate(): void{
     this.pubblica = false;
     this.creaPartitaDB();
+    console.log("privata");
   }
 
   //Ritorna il codice per entrare nella stanza
@@ -33,11 +36,12 @@ export class CreaPartitaPage implements OnInit {
     return this.codice;
   }
 
-  //Crea partita del DB
-  creaPartitaDB(): void {
-    this.codice = this.crea.creaCodice();
+  ciao(): void{
+    console.log("ciao");
   }
 
-
-
+  //Crea partita nel DB
+  creaPartitaDB(): void {
+    this.codice = this.crea.creaCodice();
+  }*/
 }
