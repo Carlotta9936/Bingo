@@ -3,7 +3,7 @@ import { User } from '../interfaces/User';
 import { Partita } from '../interfaces/Partita';
 import { collection, doc, docData, Firestore } from '@angular/fire/firestore';
 import { DataServiceService } from './data-service.service';
-import { getDatabase, set, ref, onValue } from "firebase/database";
+import { getDatabase, set, ref, onValue, remove} from "firebase/database";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { PartitaData } from '../interfaces/PartitaData';
@@ -31,17 +31,6 @@ export class DatabaseService {
       crediti: 50
     });
     alert('user created');
-  }
-
-  creaPartita(partita: PartitaData){
-    set(ref(this.database, 'partita/'+partita.codice),{
-      pubblica: partita.pubblica,
-      codice: partita.codice,
-      numPartecipanti: partita.numPartecipanti,
-      ip: partita.ip,
-      proprietario: partita.proprietario
-    });
-    alert('partita creata');
   }
 
   async login(username: string, password: string): Promise<any>{    
@@ -76,6 +65,28 @@ export class DatabaseService {
       cinquina: partita.cinquina,
       bingo: partita.bingo
     })
+  }
+
+  public creaPartita(partita: PartitaData){
+    set(ref(this.database, 'partita/'+partita.codice),{
+      pubblica: partita.pubblica,
+      codice: partita.codice,
+      numPartecipanti: partita.numPartecipanti,
+      ip: partita.ip,
+      proprietario: partita.proprietario
+    });
+  }
+
+  public eliminaPartita(cod: string){
+    const partitaRef = ref(this.database, 'partita/'+cod);
+    // Delete the file
+    remove(partitaRef).then(() => {
+    // File deleted successfully
+      console.log("eliminato: "+cod);
+    }).catch((error) => {
+    // Uh-oh, an error occurred!
+      console.log("errore");
+    });
   }
 
   
