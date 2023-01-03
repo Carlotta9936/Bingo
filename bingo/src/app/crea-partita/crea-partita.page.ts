@@ -61,7 +61,7 @@ export class CreaPartitaPage implements OnInit {
   creaPartitaDB(): void {
     this.codice = this.crea.creaCodice();
   }
-
+*/
 
 
 }
