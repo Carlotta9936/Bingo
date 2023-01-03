@@ -7,6 +7,7 @@ import { getDatabase, set, ref, onValue, remove} from "firebase/database";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { PartitaData } from '../interfaces/PartitaData';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,9 +54,6 @@ export class DatabaseService {
       return u;
     }); 
   }
-
-  //Metodi per dati partita
-
 
   //Metodi per partita
   public aggiornaPartita(partita: Partita): void{

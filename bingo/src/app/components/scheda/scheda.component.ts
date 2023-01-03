@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Casella } from 'src/app/interfaces/Casella';
 import { Partita } from 'src/app/interfaces/Partita';
+import { DatabaseService } from 'src/app/services/database.service';
 import { SchedaService } from '../../services/scheda.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class SchedaComponent implements OnInit {
   timeLeft: number = 3;
   interval?: any;
 
-  constructor(public scheda: SchedaService, private http: HttpClient) {
+  constructor(public scheda: SchedaService, private http: HttpClient, public database: DatabaseService) {
   }
 
   ngOnInit() {
@@ -70,8 +71,16 @@ export class SchedaComponent implements OnInit {
 
   //Chiama le API dell'url per controllare l'ultimo numero estratto
   ascoltaNumero(): any {
-    this.http.get<Partita>('http://localhost:3000/partita')
-      .subscribe(result => this.controllaNumero(result.ultimoNumero))
+   /* this.http.get<any>('https://bingo-bce96-default-rtdb.europe-west1.firebasedatabase.app/game/AAA')
+    .subscribe(data => {
+      console.log("Data: " + data)
+
+    });
+    let n = this.database.ascoltaNumero('AAA');
+    //console.log(n);
+    this.controllaNumero(n);
+    /*this.http.get<Partita>('http://localhost:3000/partita')
+      .subscribe(result => this.controllaNumero(result.ultimoNumero))*/
   }
 
   //Controlla se l'ultimo numero estratto è presente nella cartella

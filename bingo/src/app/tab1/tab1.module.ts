@@ -13,7 +13,7 @@ import { CellaComponent } from '../components/cella/cella.component';
 import { CasellaComponent } from '../components/casella/casella.component';
 
 @NgModule({
-    declarations: [Tab1Page, SchedaComponent, SchedeComponent, CasellaComponent, TabelloneComponent, CellaComponent],
+    declarations: [Tab1Page],
     imports: [
         IonicModule,
         CommonModule,

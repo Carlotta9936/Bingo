@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { Tab3Page } from './tab3.page';
 
 const routes: Routes = [
@@ -10,7 +12,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), 
+    IonicStorageModule.forRoot(), 
+    IonicModule.forRoot()],
   exports: [RouterModule]
 })
 export class Tab3PageRoutingModule {}

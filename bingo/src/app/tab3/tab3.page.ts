@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from '../interfaces/User';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tab3',
@@ -6,7 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  user: User;
+  username: string | null = "NO";
 
-  constructor() {}
+  constructor(public Auth: AuthService) {
+    this.user = JSON.parse(localStorage.getItem('user')!);
+    
+  }
+
+  ngOnInit() {
+    console.log("USER", this.user?.username);
+  }
+
 
 }
