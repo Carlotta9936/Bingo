@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BossoloService } from 'src/app/services/bossolo.service';
 import { HttpClient } from '@angular/common/http';
 import { Partita } from 'src/app/interfaces/Partita';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-tabellone',
@@ -20,9 +21,10 @@ export class TabelloneComponent implements OnInit {
 
   timeLeft: number = 1;
   interval?: any;
+
   
 
-  constructor(public bossolo: BossoloService, private http: HttpClient) { 
+  constructor(public bossolo: BossoloService, private http: HttpClient, public database: DatabaseService) { 
     for(let i=1;i<=90;i++){
       this.numeri.push(i);
       console.log("costruttore"+i);
@@ -44,11 +46,22 @@ export class TabelloneComponent implements OnInit {
       bingo: this.bingo
     };
 
-    this.http.put<Partita>('http://localhost:3000/partita', stato)
+    this.database.aggiornaPartita(stato);
+
+
+    
+    /*
+
+    this.http.put<Partita>('https://bingo-bce96-default-rtdb.europe-west1.firebasedatabase.app/partita/'+"AAA", stato)
       .subscribe(data=> {
         console.log("D: " + data);
         data.ultimoNumero = stato.ultimoNumero;
       })
+
+      */
+
+
+
 
       console.log("Estrazione");
 

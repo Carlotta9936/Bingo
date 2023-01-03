@@ -15,6 +15,10 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
 import { HttpClientModule } from '@angular/common/http';
 
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
