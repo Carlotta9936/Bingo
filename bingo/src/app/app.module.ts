@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,8 @@ import 'firebase/database';
     provideDatabase(() => getDatabase()), 
     provideFirestore(() => getFirestore()), 
     provideRemoteConfig(() => getRemoteConfig()),
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot()    
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

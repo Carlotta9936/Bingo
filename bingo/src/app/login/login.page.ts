@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../services/database.service';
+
 import { getDatabase, set, ref, onValue } from "firebase/database";
 import { response } from 'express';
 import { HttpClient } from '@angular/common/http';
 import { User } from 'firebase/auth';
+import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +16,8 @@ import { User } from 'firebase/auth';
 })
 export class LoginPage implements OnInit {
   db;
-  user?: User;
 
-  constructor(public database: DatabaseService, public http: HttpClient) { 
+  constructor(public database: DatabaseService, public http: HttpClient, private Auth:AuthService, private router: Router) { 
     this.db = getDatabase();
   }
 
@@ -28,7 +31,8 @@ export class LoginPage implements OnInit {
         let u = snapshot.val();
         if(u.password === value.password){
           console.log("Trovato");
-          this.user = u;
+          this.Auth.set('user', u);
+          this.router.navigate(['/tabs/tab3']);
         } else {
           console.log("NOn trovato");
         }

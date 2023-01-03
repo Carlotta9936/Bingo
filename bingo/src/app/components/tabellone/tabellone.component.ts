@@ -47,23 +47,7 @@ export class TabelloneComponent implements OnInit {
     };
 
     this.database.aggiornaPartita(stato);
-
-
-    
-    /*
-
-    this.http.put<Partita>('https://bingo-bce96-default-rtdb.europe-west1.firebasedatabase.app/partita/'+"AAA", stato)
-      .subscribe(data=> {
-        console.log("D: " + data);
-        data.ultimoNumero = stato.ultimoNumero;
-      })
-
-      */
-
-
-
-
-      console.log("Estrazione");
+    console.log("Estrazione");
 
     window.location.reload;
   }
