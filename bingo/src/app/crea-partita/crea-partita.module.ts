@@ -8,13 +8,14 @@ import { CreaPartitaPageRoutingModule } from './crea-partita-routing.module';
 
 import { CreaPartitaPage } from './crea-partita.page';
 
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    CreaPartitaPageRoutingModule
-  ],
-  declarations: [CreaPartitaPage]
+    declarations: [CreaPartitaPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        CreaPartitaPageRoutingModule,
+    ]
 })
 export class CreaPartitaPageModule {}

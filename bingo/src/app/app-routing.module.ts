@@ -24,7 +24,11 @@ const routes: Routes = [
   {
     path: 'crea-partita',
     loadChildren: () => import('./crea-partita/crea-partita.module').then( m => m.CreaPartitaPageModule)
+  },  {
+    path: 'pre-partita',
+    loadChildren: () => import('./pre-partita/pre-partita.module').then( m => m.PrePartitaPageModule)
   },
+
   
 
 

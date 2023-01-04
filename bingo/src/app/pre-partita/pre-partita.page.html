@@ -1,17 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>creaPartita</ion-title>
+    <ion-title><p> Codice partita: {{this.crea.codice}} </p></ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content class="bottoni">
-  <ion-card *ngIf="this.crea.codice==''">
-    <ion-button class="tipo" (click)="this.crea.setPublic()" [routerLink]="['../pre-partita']"> Pubblica </ion-button>
-    <ion-button class="tipo" (click)="this.crea.setPrivate()" [routerLink]="['../pre-partita']"> Privata </ion-button>
-  </ion-card>
+<title *ngIf="this.crea.pubblica== true && this.crea.pubblica != undefined; then thenBlock else elseBlock "></title>
+<ng-template #thenBlock>Partita pubblica creata</ng-template>
+<ng-template #elseBlock>Partita privata creata</ng-template>
+<ion-content>
+  <!--questi bottoni visibili solo se sono il proprietario della partita-->
+  <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
+  <ion-button (click)="this.elimina.cancelPartita(this.crea.codice)">ANNULLA PARTITA</ion-button>
 </ion-content>
-
-
 
 
 <ion-content>
