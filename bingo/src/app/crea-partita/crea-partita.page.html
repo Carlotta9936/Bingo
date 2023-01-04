@@ -6,8 +6,8 @@
 
 <ion-content class="bottoni">
   <ion-card *ngIf="this.crea.codice==''">
-    <ion-button class="tipo" (click)="this.crea.setPublic()" [routerLink]="['../pre-partita']"> Pubblica </ion-button>
-    <ion-button class="tipo" (click)="this.crea.setPrivate()" [routerLink]="['../pre-partita']"> Privata </ion-button>
+    <ion-button class="tipo" (click)="this.crea.setPublic()" [routerLink]="['../pre-partita/',this.crea.codice]"> Pubblica </ion-button>
+    <ion-button class="tipo" (click)="this.crea.setPrivate()" [routerLink]="['../pre-partita/',this.crea.codice]"> Privata </ion-button>
   </ion-card>
 </ion-content>
 
