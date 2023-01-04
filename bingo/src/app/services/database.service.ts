@@ -21,17 +21,27 @@ export class DatabaseService {
     this.database = getDatabase();
   }
 
-
   //Metodo per creare un utente nel DB
-  creaUtente(username: string, password: string, nome: string, cognome: string, ){
-    set(ref(this.database, 'users/'+username), {
+  creaUtente(username: string, password: string, nome: string, cognome: string, mail: string): User{
+    //Creo un oggetto User
+    let u: User = {
       username: username,
       password: password,
       nome: nome,
       cognome: cognome,
-      crediti: 50
-    });
-    alert('user created');
+      mail: mail,
+      crediti: 50,
+      partiteFatte: 0,
+      bingo: 0,
+      cinquine: 0,
+      superbingo: 0,
+    };
+
+    //Aggiunge al DB
+    set(ref(this.database, 'users/'+username), u );
+
+    //Ritorno l'oggetto utente appena creato
+    return u;
   }
 
   //Ritorna tutti gli utenti per il login

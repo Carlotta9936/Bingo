@@ -7,5 +7,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<p> {{user.username}} </p>
+  <h1>{{user?.username}}</h1>
+  <p>Nome: {{user?.nome}} </p>
+  <p>Cognome: {{user?.cognome}} </p>
+  <p>Mail: {{user?.mail}} </p>
+  <hr>
+  <h2> Statistiche </h2>
+  <p>Partite fatte: {{user?.partiteFatte}} </p>
+  <p>Bingo: {{user?.bingo}}</p>
+  <p>Cinquine: {{user?.cinquine}}</p>
+  <p>Superbingo: {{user?.superbingo}}</p>
+  <hr>
+  <h2> Cambia timbro </h2>
 </ion-content>
