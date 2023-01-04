@@ -19,17 +19,30 @@
         <ion-col>numero partecipanti</ion-col>
         <ion-col>entra</ion-col>
       </ion-row>
-      <ion-row class="righe">
-        <ion-col>pippi</ion-col>
-        <ion-col>10</ion-col>
+      <ion-row class="righe" *ngFor="let partita of partite">
+        <ion-col>{{this.partita.codice}}</ion-col>
+        <ion-col>{{this.partita.numPartecipanti}}</ion-col>
         <ion-col><ion-button>entra</ion-button></ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
   <br>
   <br>
+  
   <ion-card id="privata">
-    <ion-searchbar animated="true" placeholder="Inserisci qui il codice della partita"></ion-searchbar>
+    <ion-searchbar animated="true" placeholder="Inserisci qui il codice della partita" [(ngModel)]="searchTerm" (keydown.enter)="cercaPartita()"></ion-searchbar>
+    <ion-grid [fixed]="true" *ngIf="partitaCercata !== undefined">
+      <ion-row id="intestazione">
+        <ion-col>nome partita</ion-col>
+        <ion-col>numero partecipanti</ion-col>
+        <ion-col>entra</ion-col>
+      </ion-row>
+      <ion-row class="righe">
+        <ion-col>{{this.partitaCercata.codice}}</ion-col>
+        <ion-col>{{this.partitaCercata.numPartecipanti}}</ion-col>
+        <ion-col><ion-button>entra</ion-button></ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
   <!--<app-tabellone></app-tabellone>
   <app-schede></app-schede>-->
