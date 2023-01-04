@@ -3,7 +3,7 @@ import { User } from '../interfaces/User';
 import { Partita } from '../interfaces/Partita';
 import { collection, doc, docData, Firestore } from '@angular/fire/firestore';
 import { DataServiceService } from './data-service.service';
-import { getDatabase, set, ref, onValue } from "firebase/database";
+import { getDatabase, set, ref, onValue, remove} from "firebase/database";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { PartitaData } from '../interfaces/PartitaData';
@@ -34,34 +34,17 @@ export class DatabaseService {
     alert('user created');
   }
 
-  /*
-
-  login(username: string, password: string): Observable<User>{   
-    const user = ref(this.database, 'users/'+ username);
-      onValue(user, (snapshot) => {
-        //console.log("USer" + user)
-        return snapshot.val();
-    /*
-    return new Promise(resolve => {
-      const user = ref(this.database, 'users/'+ username);
-      onValue(user, (snapshot) => {
-        //console.log("USer" + user)
-        const u = snapshot.val();
-        try{
-          console.log(u)
-          if(u.password === password){
-            return u;
-          } 
-        } catch(e){
-        }
-        return null;
-      }); 
-      
-    })
-    
+  async login(username: string, password: string): Promise<any>{    
+    const user = await ref(this.database, 'users/'+ username);
+    onValue(user, (snapshot) => {
+      console.log("USer" + user)
+      const u = snapshot.val();
+      console.log(u);
+      return u;
+    }); 
 
   } 
-*/
+
   getUser(user: any): any {
     onValue(user, (snapshot) => {
       console.log("User  " + user)
@@ -69,18 +52,6 @@ export class DatabaseService {
       console.log(u);
       return u;
     }); 
-  }
-
-  //Metodi per dati partita
-  creaPartita(partita: PartitaData){
-    set(ref(this.database, 'partita/'+partita.codice),{
-      pubblica: partita.pubblica,
-      codice: partita.codice,
-      numPartecipanti: partita.numPartecipanti,
-      ip: partita.ip,
-      proprietario: partita.proprietario
-    });
-    alert('partita creata');
   }
 
   //Metodi per partita
@@ -105,27 +76,32 @@ export class DatabaseService {
     })
 
     return partite;
+  }
     
-    /*  const partite = new Observable(observer => {
-        const partiteDB = ref(this.database, 'partita/');
-        onValue(partiteDB, (snapshot) => {
-         
-         // p = JSON.stringify());
-          console.log("S", snapshot.val());
-          return snapshot.val();
-      })
-    })
-  */
+ 
       
     //console.log("getPartite", partite)
+  public creaPartita(partita: PartitaData){
+    set(ref(this.database, 'partita/'+partita.codice),{
+      pubblica: partita.pubblica,
+      codice: partita.codice,
+      numPartecipanti: partita.numPartecipanti,
+      ip: partita.ip,
+      proprietario: partita.proprietario
+    });
   }
 
-  public ascoltaNumero(codicePartita: string): any {
-    const partita = ref(this.database, 'game/' + codicePartita)
-    onValue(partita, (snapshot) => {
-      const match = snapshot.val();
-      return match.ultimoNumero;
-    })
+  public eliminaPartita(cod: string){
+    const partitaRef = ref(this.database, 'partita/'+cod);
+    // Delete the file
+    remove(partitaRef).then(() => {
+    // File deleted successfully
+      console.log("eliminato: "+cod);
+    }).catch((error) => {
+    // Uh-oh, an error occurred!
+      console.log("errore");
+    });
   }
+
   
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CreaPartitaService } from '../services/crea-partita.service';
+import { EliminaPartitaService } from '../services/elimina-partita.service';
 
 @Component({
   selector: 'app-crea-partita',
@@ -11,7 +12,7 @@ export class CreaPartitaPage implements OnInit {
   
   
 
-  constructor(public crea:CreaPartitaService) { }
+  constructor(public crea:CreaPartitaService, public elimina: EliminaPartitaService) { }
 
   ngOnInit() {
   }
