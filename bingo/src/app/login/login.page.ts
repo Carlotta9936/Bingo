@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
         if(u.password === value.password){
           console.log("Trovato");
           this.Auth.set('user', u);
-          this.router.navigate(['/tabs/tab3']);
+          this.router.navigate(['/tabs/tab1']);
         } else {
           console.log("NOn trovato");
         }
@@ -40,23 +40,5 @@ export class LoginPage implements OnInit {
         console.log("NOn trovato");
       }
     });
-
-/*
-    this.database.login(value.username, value.password).then((response: any) => {
-      console.log("Login");
-      console.log("RESPONSE: " + response);
-      if(response !== null){
-        //if(response.password === value.password){
-          console.log("Trovato");
-        //}
-      } else {
-        console.log("Non trovato");
-      }
-    });*/
-    //})
-
-
-      //.subscribe((response: User) => {
-        
   }
 }

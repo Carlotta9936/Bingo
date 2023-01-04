@@ -93,6 +93,32 @@ export class DatabaseService {
     })
   }
 
+  public async getPartite(): Promise<any> {
+    //let partite: PartitaData[] = [];
+    let p: string = "";
+    const partite = new Promise<string>((resolve, reject) => {
+      const partiteDB = ref(this.database, 'partita/');
+      onValue(partiteDB, (snapshot) => {
+        console.log("S", snapshot.val());
+        resolve(snapshot.val());
+      })
+    })
+
+    return partite;
+    
+    /*  const partite = new Observable(observer => {
+        const partiteDB = ref(this.database, 'partita/');
+        onValue(partiteDB, (snapshot) => {
+         
+         // p = JSON.stringify());
+          console.log("S", snapshot.val());
+          return snapshot.val();
+      })
+    })
+  */
+      
+    //console.log("getPartite", partite)
+  }
 
   public ascoltaNumero(codicePartita: string): any {
     const partita = ref(this.database, 'game/' + codicePartita)
