@@ -29,7 +29,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     provideFirestore(() => getFirestore()), 
     provideRemoteConfig(() => getRemoteConfig()),
     HttpClientModule,
-    IonicStorageModule.forRoot()    
+    IonicStorageModule.forRoot()
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

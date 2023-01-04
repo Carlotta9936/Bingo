@@ -12,7 +12,7 @@ export class CreaPartitaPage implements OnInit {
   
   
 
-  constructor(public crea:CreaPartitaService, public elimina: EliminaPartitaService) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService) { }
 
   ngOnInit() {
   }

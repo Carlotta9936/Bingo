@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
 import { Partita } from '../interfaces/Partita';
-import { collection, doc, docData, Firestore } from '@angular/fire/firestore';
+import { collection, doc, docData, Firestore, query, where, getDocs} from '@angular/fire/firestore';
 import { DataServiceService } from './data-service.service';
 import { getDatabase, set, ref, onValue, remove} from "firebase/database";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { PartitaData } from '../interfaces/PartitaData';
 import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class DatabaseService {
 
 
   //Metodi per Utenti
-  creaUtente(username: string, password: string, nome: string, cognome: string, ){
+  public creaUtente(username: string, password: string, nome: string, cognome: string, ){
     set(ref(this.database, 'users/'+username), {
       username: username,
       password: password,
@@ -46,7 +47,7 @@ export class DatabaseService {
 
   } 
 
-  getUser(user: any): any {
+  public getUser(user: any): any {
     onValue(user, (snapshot) => {
       console.log("User  " + user)
       const u = snapshot.val();
