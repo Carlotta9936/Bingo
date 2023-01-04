@@ -5,4 +5,8 @@ export interface User {
     cognome: string;
     mail: string;
     crediti: number;
+    partiteFatte: number | undefined;
+    bingo: number | undefined;
+    cinquine: number | undefined;
+    superbingo: number | undefined;
 }

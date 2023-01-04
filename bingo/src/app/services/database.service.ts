@@ -22,41 +22,46 @@ export class DatabaseService {
     this.database = getDatabase();
   }
 
-
-  //Metodi per Utenti
-  public creaUtente(username: string, password: string, nome: string, cognome: string, ){
-    set(ref(this.database, 'users/'+username), {
+  //Metodo per creare un utente nel DB
+  creaUtente(username: string, password: string, nome: string, cognome: string, mail: string): User{
+    //Creo un oggetto User
+    let u: User = {
       username: username,
       password: password,
       nome: nome,
       cognome: cognome,
-      crediti: 50
-    });
-    alert('user created');
+      mail: mail,
+      crediti: 50,
+      partiteFatte: 0,
+      bingo: 0,
+      cinquine: 0,
+      superbingo: 0,
+    };
+
+    //Aggiunge al DB
+    set(ref(this.database, 'users/'+username), u );
+
+    //Ritorno l'oggetto utente appena creato
+    return u;
   }
 
-  async login(username: string, password: string): Promise<any>{    
-    const user = await ref(this.database, 'users/'+ username);
-
-    onValue(user, (snapshot) => {
-      console.log("USer" + user)
-      const u = snapshot.val();
-      console.log(u);
-      return u;
-    }); 
-
+  //Ritorna tutti gli utenti per il login
+  async getUser(username: string): Promise<any>{    
+    const userPromise = new Promise<any>((resolve, reject) => {
+      const user = ref(this.database, 'users/'+ username);
+      onValue(user, (snapshot) => {
+        console.log("USer" + user)
+        const u = snapshot.val();
+        console.log(u);
+        resolve(u);
+      }); 
+    })
+    return userPromise;
   } 
 
-  public getUser(user: any): any {
-    onValue(user, (snapshot) => {
-      console.log("User  " + user)
-      const u = snapshot.val();
-      console.log(u);
-      return u;
-    }); 
-  }
-
-  //Metodi per partita
+  /** Metodi per partita
+    * ! Metodo da togliere
+  */
   public aggiornaPartita(partita: Partita): void{
     set(ref(this.database, 'game/'+'AAA'), {
       ultimoNumero: partita.ultimoNumero, 
@@ -66,6 +71,20 @@ export class DatabaseService {
     })
   }
 
+  //Ricerca tutti le partite nel DB
+  public async getPartite(): Promise<any> {
+    const partite = new Promise<string>((resolve, reject) => {
+      const partiteDB = ref(this.database, 'partita/');
+      onValue(partiteDB, (snapshot) => {
+        console.log("S", snapshot.val());
+        resolve(snapshot.val());
+      })
+    })
+
+    return partite;
+  }
+    
+ //Crea una PartitaData nel Database
   public creaPartita(partita: PartitaData){
     set(ref(this.database, 'partita/'+partita.codice),{
       pubblica: partita.pubblica,
