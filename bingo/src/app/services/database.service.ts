@@ -22,7 +22,7 @@ export class DatabaseService {
   }
 
 
-  //Metodi per Utenti
+  //Metodo per creare un utente nel DB
   creaUtente(username: string, password: string, nome: string, cognome: string, ){
     set(ref(this.database, 'users/'+username), {
       username: username,
@@ -34,27 +34,23 @@ export class DatabaseService {
     alert('user created');
   }
 
-  async login(username: string, password: string): Promise<any>{    
-    const user = await ref(this.database, 'users/'+ username);
-    onValue(user, (snapshot) => {
-      console.log("USer" + user)
-      const u = snapshot.val();
-      console.log(u);
-      return u;
-    }); 
-
+  //Ritorna tutti gli utenti per il login
+  async getUser(username: string): Promise<any>{    
+    const userPromise = new Promise<any>((resolve, reject) => {
+      const user = ref(this.database, 'users/'+ username);
+      onValue(user, (snapshot) => {
+        console.log("USer" + user)
+        const u = snapshot.val();
+        console.log(u);
+        resolve(u);
+      }); 
+    })
+    return userPromise;
   } 
 
-  getUser(user: any): any {
-    onValue(user, (snapshot) => {
-      console.log("User  " + user)
-      const u = snapshot.val();
-      console.log(u);
-      return u;
-    }); 
-  }
-
-  //Metodi per partita
+  /** Metodi per partita
+    * ! Metodo da togliere
+  */
   public aggiornaPartita(partita: Partita): void{
     set(ref(this.database, 'game/'+'AAA'), {
       ultimoNumero: partita.ultimoNumero, 
@@ -64,9 +60,8 @@ export class DatabaseService {
     })
   }
 
+  //Ricerca tutti le partite nel DB
   public async getPartite(): Promise<any> {
-    //let partite: PartitaData[] = [];
-    let p: string = "";
     const partite = new Promise<string>((resolve, reject) => {
       const partiteDB = ref(this.database, 'partita/');
       onValue(partiteDB, (snapshot) => {
@@ -78,9 +73,7 @@ export class DatabaseService {
     return partite;
   }
     
- 
-      
-    //console.log("getPartite", partite)
+ //Crea una PartitaData nel Database
   public creaPartita(partita: PartitaData){
     set(ref(this.database, 'partita/'+partita.codice),{
       pubblica: partita.pubblica,

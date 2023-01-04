@@ -14,14 +14,10 @@ export class Tab1Page {
   partitaCercata?: PartitaData;
   searchTerm = '';
 
-  constructor(public crea: CreaPartitaService, public database: DatabaseService) {
-    
- 
-    //let p = JSON.parse(partiteDB);
-    console.log("p", typeof(this.partite));
-  }
+  constructor(public crea: CreaPartitaService, public database: DatabaseService) { }
 
   async ngOnInit(){
+    //Carica tutte le partite pubbliche
     this.database.getPartite().then((value) => {
       Object.values(value).forEach((v: any) => {
         if(v.pubblica===true){
@@ -37,15 +33,7 @@ export class Tab1Page {
     });
   }
 
-
-  prova():void{
-    console.log("prova");
-  }
-
-  public async chiamaPartite(){
-
-  }
-
+  //Cerca partita tramite codice
   public async cercaPartita(){
     this.database.getPartite().then((value) => {
       Object.values(value).forEach((v: any) => {

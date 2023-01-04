@@ -25,20 +25,22 @@ export class LoginPage implements OnInit {
   }
 
   async login(value: any){
-    const user = ref(this.db, 'users/'+ value.username);
-    onValue(user, (snapshot) => {
+    this.database.getUser(value.username).then((promise) => {
+      console.log("V", promise);
       try{
-        let u = snapshot.val();
-        if(u.password === value.password){
+        if(promise.password === value.password){
           console.log("Trovato");
-          this.Auth.set('user', u);
+          this.Auth.set('user', promise);
           this.router.navigate(['/tabs/tab1']);
         } else {
-          console.log("NOn trovato");
+          console.log("Non trovato");
+          window.alert("User o password sbagliati, riprovare");
         }
       } catch(e){
-        console.log("NOn trovato");
-      }
-    });
+      console.log("Non trovato");
+      window.alert("User o password sbagliati, riprovare");
+    }
+    })
   }
+  
 }
