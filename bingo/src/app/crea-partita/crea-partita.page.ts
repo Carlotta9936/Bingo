@@ -10,8 +10,6 @@ import { EliminaPartitaService } from '../services/elimina-partita.service';
 export class CreaPartitaPage implements OnInit {
 
   
-  
-
   constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService) { }
 
   ngOnInit() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
 
@@ -9,9 +10,12 @@ import { EliminaPartitaService } from '../services/elimina-partita.service';
 })
 export class PrePartitaPage implements OnInit {
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService) { }
+  codice?:any;
+
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.codice=this.crea.getCodiceUrl();
+    console.log("codiceurl"+this.codice);
   }
-
 }

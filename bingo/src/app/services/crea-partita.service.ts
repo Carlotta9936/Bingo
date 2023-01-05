@@ -3,6 +3,8 @@ import { DatabaseService } from '../services/database.service';
 import { PartitaData } from '../interfaces/PartitaData';
 
 import { getDatabase, set, ref, onValue } from "firebase/database";
+import { ActivatedRoute, Router } from '@angular/router';
+import { stringify } from 'querystring';
 
 
 @Injectable({
@@ -11,16 +13,16 @@ import { getDatabase, set, ref, onValue } from "firebase/database";
 export class CreaPartitaService {
   db;
   pubblica?: boolean;
-  codice: string = "";
+  codice: any= "";
 
 
 
-  constructor(public database: DatabaseService) {
+  constructor(public database: DatabaseService, private route: ActivatedRoute, private router: Router ) {
     this.db = getDatabase();
   }
 
   public creaPartita(ip: string, proprietario: string, pubblica: boolean, cod: string): any{
-    console.log("cod:"+cod);
+    //let codice= this.route.snapshot.paramMap.get('codice'); 
     let codice= cod;
     let numPartecipanti: number= 1;
     let partita: PartitaData ={pubblica,codice,numPartecipanti,ip, proprietario};
@@ -58,12 +60,11 @@ export class CreaPartitaService {
     onValue(partita, (snapshot) => {
       try{
         let p = snapshot.val();
-        if(p.codice=== result){
+        if(p != null){
           console.log("Trovato");
-          this.creaCodice();
+          return this.creaCodice();
         } else {
           console.log("NOn trovato");
-          return result;
         }
       } catch(e){
         console.log("alternativa");
@@ -82,10 +83,12 @@ export class CreaPartitaService {
   setPublic():void {
     this.pubblica = true;
     this.creaPartitaDB(true);
+    this.router.navigate(['pre-partita/'+this.codice]);
   }
-
+  
   //Setta la partita in modalità privata
   setPrivate(): void{
+    this.router.navigate(['pre-partita/'+this.codice]);
     this.pubblica = false;
     this.creaPartitaDB(false);
   }
@@ -94,5 +97,15 @@ export class CreaPartitaService {
   resettaCodice(): void{
     console.log("ciao");
     this.codice='';
+  }
+
+
+  //metodo per prendere il codice della partita da params
+  getCodiceUrl() : any{
+    let url=("url"+this.router.parseUrl(this.router.url));
+    let arrayUrl:string[];
+    arrayUrl=url.split('/');
+    //return this.route.snapshot.paramMap.get('codice');
+    return arrayUrl[2];
   }
 }

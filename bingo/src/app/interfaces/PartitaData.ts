@@ -1,6 +1,6 @@
 export interface PartitaData {
     pubblica: boolean,  //true: pubblica , false: privata
-    codice: string,
+    codice: any,
     numPartecipanti: number,
     ip: string,
     proprietario: string
