@@ -93,13 +93,6 @@ export class CreaPartitaService {
     this.creaPartitaDB(false);
   }
 
-
-  resettaCodice(): void{
-    console.log("ciao");
-    this.codice='';
-  }
-
-
   //metodo per prendere il codice della partita da params
   getCodiceUrl() : any{
     let url=("url"+this.router.parseUrl(this.router.url));
