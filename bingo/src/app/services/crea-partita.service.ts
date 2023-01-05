@@ -2,19 +2,27 @@ import { Injectable } from '@angular/core';
 import { DatabaseService } from '../services/database.service';
 import { PartitaData } from '../interfaces/PartitaData';
 
+import { getDatabase, set, ref, onValue } from "firebase/database";
+import { ActivatedRoute, Router } from '@angular/router';
+import { stringify } from 'querystring';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class CreaPartitaService {
-
+  db;
   pubblica?: boolean;
-  codice: string = "";
+  codice: any= "";
 
 
 
-  constructor(public database: DatabaseService) { }
+  constructor(public database: DatabaseService, private route: ActivatedRoute, private router: Router ) {
+    this.db = getDatabase();
+  }
 
-  creaPartita(ip: string, proprietario: string, pubblica: boolean, cod: string): any{
+  public creaPartita(ip: string, proprietario: string, pubblica: boolean, cod: string): any{
+    //let codice= this.route.snapshot.paramMap.get('codice'); 
     let codice= cod;
     let numPartecipanti: number= 1;
     let partita: PartitaData ={pubblica,codice,numPartecipanti,ip, proprietario};
@@ -41,19 +49,27 @@ export class CreaPartitaService {
   }
   
   //Crea codice
-  creaCodice(): string{
+  creaCodice(): any{
     let result = '';
     for (let i = 0; i < 4; i++) {
       result += this.getRandomChar();
     }
-
-    /*
-      if(codice è già presente nel DB)
-        this.creaCodice();
-      else{
-        return result;
+    //controllo sul db che il codice generato non sia già stato salvato nel db
+    //il controllo serve perché se no sovrascrive i dati dell'altra partita
+    const partita = ref(this.db, 'partita/'+ result);
+    onValue(partita, (snapshot) => {
+      try{
+        let p = snapshot.val();
+        if(p != null){
+          console.log("Trovato");
+          return this.creaCodice();
+        } else {
+          console.log("NOn trovato");
+        }
+      } catch(e){
+        console.log("alternativa");
       }
-    */
+    });
     return result;
   }
 
@@ -67,17 +83,22 @@ export class CreaPartitaService {
   setPublic():void {
     this.pubblica = true;
     this.creaPartitaDB(true);
+    this.router.navigate(['pre-partita/'+this.codice]);
   }
-
+  
   //Setta la partita in modalità privata
   setPrivate(): void{
+    this.router.navigate(['pre-partita/'+this.codice]);
     this.pubblica = false;
     this.creaPartitaDB(false);
   }
 
-
-  resettaCodice(): void{
-    console.log("ciao");
-    this.codice='';
+  //metodo per prendere il codice della partita da params
+  getCodiceUrl() : any{
+    let url=("url"+this.router.parseUrl(this.router.url));
+    let arrayUrl:string[];
+    arrayUrl=url.split('/');
+    //return this.route.snapshot.paramMap.get('codice');
+    return arrayUrl[2];
   }
 }

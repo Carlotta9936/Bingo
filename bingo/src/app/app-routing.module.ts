@@ -29,6 +29,10 @@ const routes: Routes = [
     path: 'market',
     loadChildren: () => import('./market/market.module').then( m => m.MarketPageModule)
   },
+  {
+    path: 'pre-partita/:codice',
+    loadChildren: () => import('./pre-partita/pre-partita.module').then( m => m.PrePartitaPageModule)
+  },
 
   
 

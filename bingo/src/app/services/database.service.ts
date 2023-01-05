@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
 import { Partita } from '../interfaces/Partita';
-import { collection, doc, docData, Firestore } from '@angular/fire/firestore';
+import { collection, doc, docData, Firestore, query, where, getDocs} from '@angular/fire/firestore';
 import { DataServiceService } from './data-service.service';
 import { getDatabase, set, ref, onValue, remove, update} from "firebase/database";
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { PartitaData } from '../interfaces/PartitaData';
 import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
