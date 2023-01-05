@@ -41,7 +41,7 @@
       <ion-row class="righe">
         <ion-col>{{this.partitaCercata.codice}}</ion-col>
         <ion-col>{{this.partitaCercata.numPartecipanti}}</ion-col>
-        <ion-col><ion-button>entra</ion-button></ion-col>
+        <ion-col><ion-button [routerLink]="['../../pre-partita/',this.partitaCercata.codice]">entra</ion-button></ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
