@@ -3,9 +3,6 @@
     <ion-title><p> Codice partita: {{this.codice}} </p></ion-title>
   </ion-toolbar>
 </ion-header>
-<title *ngIf="this.crea.pubblica== true && this.crea.pubblica != undefined; then thenBlock else elseBlock "></title>
-<ng-template #thenBlock>Partita pubblica creata</ng-template>
-<ng-template #elseBlock>Partita privata creata</ng-template>
 <ion-content>
   <!--questi bottoni visibili solo se sono il proprietario della partita-->
   <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
