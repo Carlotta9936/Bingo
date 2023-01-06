@@ -5,8 +5,10 @@
 </ion-header>
 <ion-content>
   <!--questi bottoni visibili solo se sono il proprietario della partita-->
-  <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
-  <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
+  <div *ngIf="this.proprietario==true">
+    <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
+    <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
+  </div>
 </ion-content>
 
 

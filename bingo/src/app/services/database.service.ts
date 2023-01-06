@@ -59,6 +59,22 @@ export class DatabaseService {
     return userPromise;
   } 
 
+  //ritorna il proprietario di una partita dato il codice
+  getProprietarioPartita(codice: string): Promise<any>{    
+    const codicePromise = new Promise<any>((resolve, reject) => {
+      const cod = ref(this.database, 'partita/'+ codice);
+      onValue(cod, (snapshot) => {
+        console.log("codice" + cod);
+        const u = snapshot.val();
+        console.log(u);
+        resolve(u);
+      }); 
+    })
+    return codicePromise;
+  } 
+
+
+
   /** Metodi per partita
     * ! Metodo da togliere
   */
