@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { GuardiaService } from './guardia.service';
+import { GuardiaService } from './services/guardia.service';
 
 const routes: Routes = [
   {
@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: 'crea-partita',
     loadChildren: () => import('./crea-partita/crea-partita.module').then( m => m.CreaPartitaPageModule)
+  },
+  {
+    path: 'market',
+    loadChildren: () => import('./market/market.module').then( m => m.MarketPageModule)
   },
   {
     path: 'pre-partita/:codice',

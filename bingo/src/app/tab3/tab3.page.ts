@@ -14,7 +14,7 @@ export class Tab3Page {
 
   constructor(public Auth: AuthService, public database: DatabaseService) {
     let username = JSON.parse(localStorage.getItem('user')!);
-    database.getUser(username.username).then((value) => {
+    database.getUser(username).then((value) => {
       let u: User = {
         username: value.username,
         cognome: value.cognome,
@@ -27,7 +27,6 @@ export class Tab3Page {
         cinquine: this.isZero(value.cinquine),
         superbingo: this.isZero(value.superbingo),
       }
-
       this.user = u;
     })
 

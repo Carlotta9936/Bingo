@@ -30,7 +30,8 @@ export class LoginPage implements OnInit {
       try{
         if(promise.password === value.password){
           console.log("Trovato");
-          this.Auth.set('user', promise);
+          this.Auth.set('user', promise.username);
+          this.Auth.set('crediti', promise.crediti);
           this.router.navigate(['/tabs/tab1']);
         } else {
           console.log("Non trovato");
