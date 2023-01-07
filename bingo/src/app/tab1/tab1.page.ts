@@ -39,7 +39,7 @@ export class Tab1Page {
 
   //metodo che manda alla stanza prepartita 
   public creaPartita():void{
-    if(this.controllaCrediti(JSON.parse(localStorage.getItem('user')!))==true){
+    if(this.crediti.autorizzaOperazione(1)==true){
       this.router.navigate(['crea-partita']);
     }else{
       this.presentAlert();
@@ -59,30 +59,20 @@ export class Tab1Page {
 
   public entra(codice: string): void{
     //controllo se ha i crediti per comprare una scheda
-    if(this.controllaCrediti(JSON.parse(localStorage.getItem('user')!))==true){
+    if(this.crediti.autorizzaOperazione(1)==true){
       //chiamata al db per prendere il numero dei partecipanti
-    this.database.getPartita(codice).then((promise) => {
-      try{
-        let numPartecipanti= promise.numPartecipanti;
-        //aggiorno il numero dei partecipanti
-        this.database.aggiornaPartecipanti(codice, numPartecipanti+1);
-        this.router.navigate(['pre-partita'+codice]);
-
-      }catch (e){
-        console.log("errore"+e);
-      }
-    });
+      this.database.getPartita(codice).then((promise) => {
+        try{
+          let numPartecipanti= promise.numPartecipanti;
+          //aggiorno il numero dei partecipanti
+          this.database.aggiornaPartecipanti(codice, numPartecipanti+1);
+          this.router.navigate(['pre-partita/'+codice]);
+        }catch (e){
+          console.log("errore"+e);
+        }
+      });
     }else{
       this.presentAlert();
-    }
-  }
-
-  public controllaCrediti(user: string):boolean{
-    //ho messo 1 ma è da mettere quanto costa 1 scheda
-    if(this.crediti.prendiCrediti()>50){
-      return true;
-    }else{
-      return false;
     }
   }
 
