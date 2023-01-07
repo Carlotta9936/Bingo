@@ -43,6 +43,15 @@ export class Tab1Page {
       });
     });
   }
-  
 
+  public entra(codice: string): void{
+    this.database.getPartita(codice).then((promise) => {
+      try{
+        let numPartecipanti= promise.numPartecipanti;
+        this.database.aggiornaPartecipanti(codice, numPartecipanti+1);
+      }catch (e){
+        console.log("errore"+e);
+      }
+    });
+  }
 }

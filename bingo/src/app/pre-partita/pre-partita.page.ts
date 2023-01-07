@@ -13,6 +13,7 @@ export class PrePartitaPage implements OnInit {
 
   codice?:any;
   proprietario?:boolean;
+  userProprietario?:string;
 
   constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService) { }
 
@@ -22,9 +23,9 @@ export class PrePartitaPage implements OnInit {
   }
 
   public controllaProprietario(user: string):void{
-    this.database.getProprietarioPartita(this.codice).then((promise) => {
+    this.database.getPartita(this.codice).then((promise) => {
       try{
-        console.log("prop"+promise.codice);
+        this.userProprietario=promise.proprietario;
         if(promise.proprietario==JSON.parse(localStorage.getItem('user')!)){
           this.proprietario=true;
         }else{

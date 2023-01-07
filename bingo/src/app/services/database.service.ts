@@ -59,21 +59,19 @@ export class DatabaseService {
     return userPromise;
   } 
 
-  //ritorna il proprietario di una partita dato il codice
-  getProprietarioPartita(codice: string): Promise<any>{    
+  //ritorna i dati di una partita dato il codice
+  getPartita(codice: string): Promise<any>{    
     const codicePromise = new Promise<any>((resolve, reject) => {
       const cod = ref(this.database, 'partita/'+ codice);
       onValue(cod, (snapshot) => {
         console.log("codice" + cod);
-        const u = snapshot.val();
-        console.log(u);
-        resolve(u);
+        const c = snapshot.val();
+        console.log(c);
+        resolve(c);
       }); 
     })
     return codicePromise;
   } 
-
-
 
   /** Metodi per partita
     * ! Metodo da togliere
@@ -113,12 +111,9 @@ export class DatabaseService {
 
   public eliminaPartita(cod: string){
     const partitaRef = ref(this.database, 'partita/'+cod);
-    // Delete the file
     remove(partitaRef).then(() => {
-    // File deleted successfully
       console.log("eliminato: "+cod);
     }).catch((error) => {
-    // Uh-oh, an error occurred!
       console.log("errore");
     });
   }
@@ -128,7 +123,12 @@ export class DatabaseService {
     update(ref(this.database, 'users/'+username), {
       crediti: val
     } );
+  }
 
+  aggiornaPartecipanti(codice: string, particpanti: number): void{
+    update(ref(this.database, 'partita/'+codice), {
+      numPartecipanti: particpanti
+    } );
   }
   
 }
