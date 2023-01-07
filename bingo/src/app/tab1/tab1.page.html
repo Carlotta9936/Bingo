@@ -6,10 +6,12 @@
   </ion-toolbar>
 </ion-header>
 
+
+
 <ion-content [fullscreen]="true">
   <app-crediti [routerLink]="['../../market']"> </app-crediti>
   <ion-card id="crea">
-    <ion-button [routerLink]="['../../crea-partita']">Crea Partita</ion-button>
+    <ion-button (click)="this.creaPartita()">Crea Partita</ion-button>
   </ion-card>
   <br>
   <br>
@@ -23,7 +25,7 @@
       <ion-row class="righe" *ngFor="let partita of partite">
         <ion-col>{{this.partita.codice}}</ion-col>
         <ion-col>{{this.partita.numPartecipanti}}</ion-col>
-        <ion-col><ion-button [routerLink]="['../../pre-partita/',this.partita.codice]" (click)="this.entra(this.partita.codice)">entra</ion-button></ion-col>
+        <ion-col><ion-button (click)="this.entra(this.partita.codice)">entra</ion-button></ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
@@ -42,12 +44,10 @@
       <ion-row class="righe">
         <ion-col>{{this.partitaCercata.codice}}</ion-col>
         <ion-col>{{this.partitaCercata.numPartecipanti}}</ion-col>
-        <ion-col><ion-button [routerLink]="['../../pre-partita/',this.partitaCercata.codice]" (click)="this.entra(this.partitaCercata.codice)">entra</ion-button></ion-col>
+        <ion-col><ion-button (click)="this.entra(this.partitaCercata.codice)">entra</ion-button></ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
-  <!--<app-tabellone></app-tabellone>
-  <app-schede></app-schede>-->
 </ion-content>
 
 

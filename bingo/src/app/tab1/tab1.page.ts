@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { PartitaData } from '../interfaces/PartitaData';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
+import { ControlloCreditiService } from '../services/controllo-crediti.service';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-tab1',
@@ -14,7 +18,7 @@ export class Tab1Page {
   partitaCercata?: PartitaData;
   searchTerm = '';
 
-  constructor(public crea: CreaPartitaService, public database: DatabaseService) { }
+  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alertController: AlertController) { }
 
   async ngOnInit(){
     //Carica tutte le partite pubbliche
@@ -33,6 +37,15 @@ export class Tab1Page {
     });
   }
 
+  //metodo che manda alla stanza prepartita 
+  public creaPartita():void{
+    if(this.controllaCrediti(JSON.parse(localStorage.getItem('user')!))==true){
+      this.router.navigate(['crea-partita']);
+    }else{
+      this.presentAlert();
+    }
+  }
+
   //Cerca partita tramite codice
   public async cercaPartita(){
     this.database.getPartite().then((value) => {
@@ -45,13 +58,42 @@ export class Tab1Page {
   }
 
   public entra(codice: string): void{
+    //controllo se ha i crediti per comprare una scheda
+    if(this.controllaCrediti(JSON.parse(localStorage.getItem('user')!))==true){
+      //chiamata al db per prendere il numero dei partecipanti
     this.database.getPartita(codice).then((promise) => {
       try{
         let numPartecipanti= promise.numPartecipanti;
+        //aggiorno il numero dei partecipanti
         this.database.aggiornaPartecipanti(codice, numPartecipanti+1);
+        this.router.navigate(['pre-partita'+codice]);
+
       }catch (e){
         console.log("errore"+e);
       }
     });
+    }else{
+      this.presentAlert();
+    }
+  }
+
+  public controllaCrediti(user: string):boolean{
+    //ho messo 1 ma è da mettere quanto costa 1 scheda
+    if(this.crediti.prendiCrediti()>50){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'Important message',
+      message: 'fatti un giro al market, non hai crediti per giocare',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 }
