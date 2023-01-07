@@ -14,7 +14,7 @@ import { TabelloneComponent } from '../components/tabellone/tabellone.component'
 import { CellaComponent } from '../components/cella/cella.component';
 
 @NgModule({
-    declarations: [Tab2Page, SchedaComponent, SchedeComponent, CasellaComponent, TabelloneComponent, CellaComponent],
+    declarations: [Tab2Page, TabelloneComponent, CellaComponent],
     imports: [
         IonicModule,
         CommonModule,

@@ -85,6 +85,7 @@ export class DatabaseService {
     })
   }
 
+  
   //Ricerca tutti le partite nel DB
   public async getPartite(): Promise<any> {
     const partite = new Promise<string>((resolve, reject) => {

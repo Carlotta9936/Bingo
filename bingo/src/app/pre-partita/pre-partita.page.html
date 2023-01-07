@@ -3,10 +3,8 @@
     <ion-title><p> Codice partita: {{this.codice}} </p></ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-
-
-  <!--questi bottoni visibili solo se sono il proprietario della partita-->
   <div *ngIf="this.proprietario==true; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
@@ -16,6 +14,8 @@
       <p>Proprietario: {{this.userProprietario}}</p>
     </ng-template>
 </ion-content>
+<app-schede></app-schede>
+
 
 
 <ion-content>
