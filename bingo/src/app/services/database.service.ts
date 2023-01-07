@@ -8,6 +8,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { PartitaData } from '../interfaces/PartitaData';
 import { Observable } from 'rxjs';
+import { Timbro } from '../interfaces/Timbro';
 
 
 @Injectable({
@@ -32,10 +33,14 @@ export class DatabaseService {
       cognome: cognome,
       mail: mail,
       crediti: 50,
-      partiteFatte: 0,
-      bingo: 0,
-      cinquine: 0,
-      superbingo: 0,
+      timbri: 1,
+      stats: { 
+        partiteFatte: 0,
+        bingo: 0,
+        cinquine: 0,
+        superbingo: 0,
+        maxVincita: 0
+      }
     };
 
     //Aggiunge al DB
@@ -48,11 +53,10 @@ export class DatabaseService {
   //Ritorna tutti gli utenti per il login
   async getUser(username: string): Promise<any>{    
     const userPromise = new Promise<any>((resolve, reject) => {
+      console.log("Username", username);
       const user = ref(this.database, 'users/'+ username);
       onValue(user, (snapshot) => {
-        console.log("USer" + user)
         const u = snapshot.val();
-        console.log(u);
         resolve(u);
       }); 
     })
@@ -113,6 +117,23 @@ export class DatabaseService {
       crediti: val
     } );
 
+  }
+
+  public async getTimbri(): Promise<Timbro[]> {
+    const timbriPromise = new Promise<Timbro[]>((resolve, reject) => {
+      const timbri = ref(this.database, 'timbri/');
+      onValue(timbri, (snapshot) => {
+        resolve(snapshot.val());
+      })
+    })
+
+    return timbriPromise;
+  } 
+
+  aggiungiTimbro(user: string, timbro: number): void {
+    update(ref(this.database, 'users/'+user), {
+      codiceTimbri: timbro
+    });
   }
   
 }
