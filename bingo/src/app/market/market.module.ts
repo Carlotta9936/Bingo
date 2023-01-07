@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { MarketPageRoutingModule } from './market-routing.module';
 
 import { MarketPage } from './market.page';
+import { AcquistoTimbroComponent } from '../components/acquisto-timbro/acquisto-timbro.component';
+import { AcquistoCreditiComponent } from '../components/acquisto-crediti/acquisto-crediti.component';
 
 @NgModule({
   imports: [
@@ -15,6 +17,6 @@ import { MarketPage } from './market.page';
     IonicModule,
     MarketPageRoutingModule
   ],
-  declarations: [MarketPage]
+  declarations: [MarketPage, AcquistoTimbroComponent, AcquistoCreditiComponent]
 })
 export class MarketPageModule {}

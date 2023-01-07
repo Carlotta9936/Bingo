@@ -22,10 +22,14 @@ export class Tab3Page {
         mail: value.mail,
         password: value.password,
         crediti: value.crediti,
-        partiteFatte: this.isZero(value.partiteFatte),
-        bingo: this.isZero(value.bingo),
-        cinquine: this.isZero(value.cinquine),
-        superbingo: this.isZero(value.superbingo),
+        timbri: value.timbri,
+        stats: {
+          partiteFatte: this.isZero(value.stats.partiteFatte),
+          bingo: this.isZero(value.stats.bingo),
+          cinquine: this.isZero(value.stats.cinquine),
+          superbingo: this.isZero(value.stats.superbingo),
+          maxVincita: this.isZero(value.stats.maxVincita)
+        }
       }
       this.user = u;
     })

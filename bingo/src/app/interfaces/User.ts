@@ -5,8 +5,12 @@ export interface User {
     cognome: string;
     mail: string;
     crediti: number;
-    partiteFatte: number | undefined;
-    bingo: number | undefined;
-    cinquine: number | undefined;
-    superbingo: number | undefined;
+    timbri: number;
+    stats: {
+        partiteFatte: number;
+        bingo: number;
+        cinquine: number;
+        superbingo: number;
+        maxVincita: number;
+    }
 }

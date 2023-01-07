@@ -18,7 +18,8 @@ export class RegistrazionePage implements OnInit {
 
   registerUser(value: any): any{
     this.database.creaUtente(value.username, value.password, value.nome, value.cognome, value.mail);
-    this.Auth.set('user', value);
+    this.Auth.set('user', value.username);
+    this.Auth.set('crediti', 50);
     this.router.navigate(['/tabs/tab1']);
   }
 
