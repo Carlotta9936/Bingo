@@ -42,7 +42,7 @@ export class Tab1Page {
     if(this.crediti.autorizzaOperazione(1)==true){
       this.router.navigate(['crea-partita']);
     }else{
-      this.presentAlert();
+      this.presentAlert('fatti un giro al market, non hai crediti per giocare');
     }
   }
 
@@ -72,15 +72,15 @@ export class Tab1Page {
         }
       });
     }else{
-      this.presentAlert();
+      this.presentAlert('fatti un giro al market, non hai crediti per giocare');
     }
   }
 
-  async presentAlert() {
+  async presentAlert(msg: string) {
     const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Important message',
-      message: 'fatti un giro al market, non hai crediti per giocare',
+      message: msg,
       buttons: ['OK'],
     });
 
