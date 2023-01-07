@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Timbro } from '../interfaces/Timbro';
+import { ControlloCreditiService } from '../services/controllo-crediti.service';
 import { DatabaseService } from '../services/database.service';
 import { TimbriService } from '../services/timbri.service';
 
@@ -13,7 +14,7 @@ export class MarketPage implements OnInit {
   crediti: number;
   timbriAcq: Timbro[] = [];
 
-  constructor(public database: DatabaseService, public timbri: TimbriService) {
+  constructor(public database: DatabaseService, public timbri: TimbriService, public controlloCrediti: ControlloCreditiService) {
     //+ converte in int, ! non è null
     this.crediti = +localStorage.getItem('crediti')!
   }
@@ -23,26 +24,21 @@ export class MarketPage implements OnInit {
   }
 
   compraTimbro(idTimbro: number, crediti: number):void{
-      //Aggiungi timbra a lista timbri
-      //console.log("T", idTimbro)
-      this.timbri.aggiungiTimbro("Alsi", idTimbro)
-      //Aggiorna crediti 
-      this.aggiornaCrediti(crediti);
-
-      window.location.reload();
+    //Controllo se l'utente si può permettere il timbro
+    if(this.controlloCrediti.autorizzaOperazione(crediti)){
+        //Aggiungi timbra a lista timbri
+        this.timbri.aggiungiTimbro(localStorage.getItem('user')!, idTimbro)
+        window.alert("Nuovo timbro acquistato");
+        window.location.reload();
+      } else {
+        window.alert("Mi dispiace ma non ti puoi permettere questo timbro");
+      }
     }
 
-  aggiornaCrediti(val: number): void{
-    //Aggiornare DB
-    this.database.aggiornaCrediti("Alsi", this.crediti - val);
-    //Aggiornare local data
-    this.aggiornaLocalStorage(val);
-  }
+  compraCrediti(quantita: number): void{
+    //Fare transazione con paypal con paypal
+    this.controlloCrediti.aggiornaCrediti(quantita*(-1));
 
-  aggiornaLocalStorage(val: number): void{
-    this.crediti = +localStorage.getItem('crediti')!
-    this.crediti -= val;
-    localStorage.setItem("crediti", ""+this.crediti);
   }
 
   getTimbri(): any{
