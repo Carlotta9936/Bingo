@@ -5,6 +5,7 @@ import { PartitaData } from '../interfaces/PartitaData';
 import { getDatabase, set, ref, onValue } from "firebase/database";
 import { ActivatedRoute, Router } from '@angular/router';
 import { stringify } from 'querystring';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -14,10 +15,12 @@ export class CreaPartitaService {
   db;
   pubblica?: boolean;
   codice: any= "";
+  username = JSON.parse(localStorage.getItem('user')!);
 
 
 
-  constructor(public database: DatabaseService, private route: ActivatedRoute, private router: Router ) {
+
+  constructor(public database: DatabaseService, private route: ActivatedRoute, private router: Router, private Auth:AuthService ) {
     this.db = getDatabase();
   }
 
@@ -37,7 +40,7 @@ export class CreaPartitaService {
     this.codice=this.creaCodice();
     const ipAddress = await this.getIPAddress();
     console.log(`Your IP address is: ${ipAddress}`);
-    this.creaPartita(ipAddress,"a",partita,this.codice);
+    this.creaPartita(ipAddress,this.username,partita,this.codice);
     }
 
 
