@@ -14,6 +14,8 @@ export class PrePartitaPage implements OnInit {
   codice?:any;
   proprietario?:boolean;
   userProprietario?:string;
+  startPartita:boolean=false;
+  iniziata: boolean=false;
 
   constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService) { }
 
@@ -36,5 +38,10 @@ export class PrePartitaPage implements OnInit {
         console.log("errore"+e);
       }
     });
+  }
+
+  public start():void{
+    this.startPartita=true;
+    this.iniziata=true;
   }
 }

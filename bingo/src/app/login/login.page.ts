@@ -8,6 +8,7 @@ import { User } from 'firebase/auth';
 //import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   db;
 
-  constructor(public database: DatabaseService, public http: HttpClient, private Auth:AuthService, private router: Router) { 
+  constructor(public database: DatabaseService, public http: HttpClient, private Auth:AuthService, private router: Router, private alert: AlertService) { 
     this.db = getDatabase();
   }
 
@@ -35,11 +36,11 @@ export class LoginPage implements OnInit {
           this.router.navigate(['/tabs/tab1']);
         } else {
           console.log("Non trovato");
-          window.alert("User o password sbagliati, riprovare");
+          this.alert.presentAlert("User o password sbagliati, riprovare");
         }
       } catch(e){
       console.log("Non trovato");
-      window.alert("User o password sbagliati, riprovare");
+      this.alert.presentAlert("User o password sbagliati, riprovare");
     }
     })
   }
