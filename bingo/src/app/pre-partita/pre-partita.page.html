@@ -7,7 +7,7 @@
 <ion-content>
   <div *ngIf="this.proprietario==true; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-      <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori e che tutti abbiano almeno una scheda-->
+      <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
       <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
     </ng-template>
     <ng-template #elseBlock>

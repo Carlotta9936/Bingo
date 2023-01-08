@@ -4,8 +4,7 @@ import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { ControlloCreditiService } from '../services/controllo-crediti.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
-
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-tab1',
@@ -18,7 +17,7 @@ export class Tab1Page {
   partitaCercata?: PartitaData;
   searchTerm = '';
 
-  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alertController: AlertController) { }
+  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alert: AlertService) { }
 
   async ngOnInit(){
     //Carica tutte le partite pubbliche
@@ -42,7 +41,7 @@ export class Tab1Page {
     if(this.crediti.autorizzaOperazione(1)==true){
       this.router.navigate(['crea-partita']);
     }else{
-      this.presentAlert('fatti un giro al market, non hai crediti per giocare');
+      this.alert.presentAlert('fatti un giro al market, non hai crediti per giocare');
     }
   }
 
@@ -72,18 +71,7 @@ export class Tab1Page {
         }
       });
     }else{
-      this.presentAlert('fatti un giro al market, non hai crediti per giocare');
+      this.alert.presentAlert('fatti un giro al market, non hai crediti per giocare');
     }
-  }
-
-  async presentAlert(msg: string) {
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Important message',
-      message: msg,
-      buttons: ['OK'],
-    });
-
-    await alert.present();
   }
 }
