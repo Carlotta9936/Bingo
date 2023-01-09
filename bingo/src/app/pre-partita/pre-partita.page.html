@@ -14,7 +14,7 @@
     </ng-template>
     <ng-template #elseBlock>
       <p>Proprietario: {{this.userProprietario}}</p>
-      <ion-button>Esci</ion-button>
+      <ion-button (click)="this.esci(this.codice)">Esci</ion-button>
 
     </ng-template>
     <div *ngIf="this.startPartita==true">
@@ -27,22 +27,43 @@
 
 <ion-content>
   <ion-tabs>
+    <div *ngIf="this.proprietario==false; then thenBlock1 else elseBlock1"></div>
+    <ng-template #thenBlock1>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button [routerLink]="['/../../tabs/tab1']">
+      <ion-tab-button [routerLink]="['/../../tabs/tab1']" (click)="this.esci(this.codice)">
         <ion-icon name="triangle"></ion-icon>
         <ion-label>Tab 1</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button [routerLink]="['/../../tabs/tab2']">
+      <ion-tab-button [routerLink]="['/../../tabs/tab2']" (click)="this.esci(this.codice)">
         <ion-icon name="ellipse"></ion-icon>
         <ion-label>Tab 2</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button [routerLink]="['/../../tabs/tab3']">
+      <ion-tab-button [routerLink]="['/../../tabs/tab3']" (click)="this.esci(this.codice)">
         <ion-icon name="square"></ion-icon>
         <ion-label>Tab 3</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
+    </ng-template>
+    <ng-template #elseBlock1>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button [routerLink]="['/../../tabs/tab1']" (click)="this.elimina.cancelPartita(this.codice)">
+          <ion-icon name="triangle"></ion-icon>
+          <ion-label>Tab 1</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button [routerLink]="['/../../tabs/tab2']" (click)="this.elimina.cancelPartita(this.codice)">
+          <ion-icon name="ellipse"></ion-icon>
+          <ion-label>Tab 2</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button [routerLink]="['/../../tabs/tab3']" (click)="this.elimina.cancelPartita(this.codice)">
+          <ion-icon name="square"></ion-icon>
+          <ion-label>Tab 3</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ng-template>
   
   </ion-tabs>
   

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
@@ -17,7 +17,7 @@ export class PrePartitaPage implements OnInit {
   startPartita:boolean=false;
   iniziata: boolean=false;
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
@@ -43,5 +43,19 @@ export class PrePartitaPage implements OnInit {
   public start():void{
     this.startPartita=true;
     this.iniziata=true;
+  }
+
+  public esci(codice: string):void{
+    //chiamata al db per prendere il numero dei partecipanti
+    this.database.getPartita(codice).then((promise) => {
+      try{
+        let numPartecipanti= promise.numPartecipanti;
+        //aggiorno il numero dei partecipanti
+        this.database.aggiornaPartecipanti(codice, numPartecipanti-1);
+        this.router.navigate(['/tabs/tab1']);
+      }catch (e){
+        console.log("errore"+e);
+      }
+    });
   }
 }
