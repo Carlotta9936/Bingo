@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-pre-partita',
@@ -16,15 +17,21 @@ export class PrePartitaPage implements OnInit {
   userProprietario?:string;
   startPartita:boolean=false;
   iniziata: boolean=false;
+  newMessage?: string;
+  messageList: string[] = [];
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
-    this.controllaProprietario(this.crea.username);
+    this.controllaProprietario();  
+    this.socket.getNewMessage().subscribe((message: string) => {
+      this.messageList.push(message);
+    });
+    this.socket.stanza(this.codice);
   }
 
-  public controllaProprietario(user: string):void{
+  public controllaProprietario():void{
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
@@ -38,6 +45,11 @@ export class PrePartitaPage implements OnInit {
         console.log("errore"+e);
       }
     });
+  }
+
+  public sendMessage():void {
+    this.socket.sendMessage(JSON.parse(localStorage.getItem('user')!)+': '+this.newMessage);
+    this.newMessage = '';
   }
 
   public start():void{

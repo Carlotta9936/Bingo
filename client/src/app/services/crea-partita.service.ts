@@ -48,6 +48,7 @@ export class CreaPartitaService {
     console.log("async")
     const response = await fetch('https://api.ipify.org?format=json');
     const data = await response.json();
+    console.log(data.ip);
     return data.ip;
   }
   
