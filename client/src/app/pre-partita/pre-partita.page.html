@@ -16,10 +16,10 @@
     <ng-template #thenBlock>
       <div *ngIf="this.iniziata==false">
         <ion-button (click)="this.start()">START PARTITA</ion-button><!--manca controllo numero giocatori-->
-      </div>
       <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
+    </div>
     </ng-template>
-    <ng-template #elseBlock>
+    <ng-template #elseBlock>-->
       <p>Proprietario: {{this.userProprietario}}</p>
       <ion-button (click)="this.esci(this.codice)">Esci</ion-button>
 

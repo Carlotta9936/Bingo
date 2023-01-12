@@ -23,9 +23,11 @@ io.on('connection', (socket) => {
     socket.leave(room);
     console.log("disconnesso")
   });
-  
 
-  io.to("some room").emit("some event");
+  socket.on('delete',function(room){
+    socket.leave(room);
+    io.in(room).socketsLeave(room);
+  });
 
   socket.on('disconnect', () => {
     console.log('a user disconnected!');

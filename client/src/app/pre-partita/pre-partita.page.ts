@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from '../services/alert.service';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
@@ -20,13 +21,18 @@ export class PrePartitaPage implements OnInit {
   newMessage?: string;
   messageList: string[] = [];
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService, public alert: AlertService) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
     this.controllaProprietario();  
     this.socket.getNewMessage().subscribe((message: string) => {
-      this.messageList.push(message);
+      if(message.includes("Il server si è disconnesso")){
+        this.alert.presentAlert("il server si è disconnesso, PARTITA ANNULLATA");
+        this.esci(this.codice);
+      }else{
+        this.messageList.push(message);
+      }
     });
     this.socket.stanza(this.codice,JSON.parse(localStorage.getItem('user')!));
   }
@@ -35,7 +41,7 @@ export class PrePartitaPage implements OnInit {
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
-        if(promise.proprietario==JSON.parse(localStorage.getItem('user')!)){
+        if(promise.proprietario==JSON.parse(localStorage.getItem('user')!),false){ //false indica che non sono il proprietario
           this.proprietario=true;
         }else{
           this.proprietario=false;
@@ -58,7 +64,7 @@ export class PrePartitaPage implements OnInit {
   }
 
   public esci(codice: string):void{
-    this.socket.esci(codice,(JSON.parse(localStorage.getItem('user')!)));
+    this.socket.esci(codice,(JSON.parse(localStorage.getItem('user')!)),false);
     //chiamata al db per prendere il numero dei partecipanti
     this.database.getPartita(codice).then((promise) => {
       try{
