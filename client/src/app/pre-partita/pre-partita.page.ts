@@ -28,7 +28,7 @@ export class PrePartitaPage implements OnInit {
     this.socket.getNewMessage().subscribe((message: string) => {
       this.messageList.push(message);
     });
-    this.socket.stanza(this.codice);
+    this.socket.stanza(this.codice,JSON.parse(localStorage.getItem('user')!));
   }
 
   public controllaProprietario():void{
@@ -58,6 +58,7 @@ export class PrePartitaPage implements OnInit {
   }
 
   public esci(codice: string):void{
+    this.socket.esci(codice,(JSON.parse(localStorage.getItem('user')!)));
     //chiamata al db per prendere il numero dei partecipanti
     this.database.getPartita(codice).then((promise) => {
       try{

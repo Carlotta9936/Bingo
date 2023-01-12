@@ -17,12 +17,12 @@ export class SocketService {
     this.socket.emit('message', message);
   }
 
-  public stanza(room: string):void{
-    this.socket.emit('join',room);
+  public stanza(room: string, nome: any):void{
+    this.socket.emit('join',room, nome);
   }
 
-  public esci():void{
-    this.socket.emit('disconnect');
+  public esci(room:string, nome: any):void{
+    this.socket.emit('leave',room, nome);
   }
 
   public getNewMessage = () => {

@@ -7,15 +7,22 @@ const io = require('socket.io')(httpServer, {
 const port = process.env.PORT || 3000;
 
 io.on('connection', (socket) => {
-  socket.on('join', function(room) {
+  socket.on('join', function(room,nome) {
     console.log('stanza'+room);
     socket.join(room);
+    io.to(room).emit('message', "server: "+nome+" si è connesso");
     socket.on('message', async (message) => {
       io.to(room).emit('message', `${message}`);
       console.log(message);
     });
   });
   console.log("new connection ");
+
+  socket.on('leave',function(room, nome){
+    io.to(room).emit('message', "server: "+nome+" si è disconnesso");
+    socket.leave(room);
+    console.log("disconnesso")
+  });
   
 
   io.to("some room").emit("some event");
