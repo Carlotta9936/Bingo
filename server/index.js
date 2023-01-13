@@ -10,6 +10,7 @@ io.on('connection', (socket) => {
   socket.on('join', function(room,nome) {
     console.log('stanza'+room);
     socket.join(room);
+    //informo quale client si è connesso
     io.to(room).emit('message', "server: "+nome+" si è connesso");
     socket.on('message', async (message) => {
       io.to(room).emit('message', `${message}`);
@@ -18,12 +19,14 @@ io.on('connection', (socket) => {
   });
   console.log("new connection ");
 
+  //informo quale client si è disconnesso
   socket.on('leave',function(room, nome){
     io.to(room).emit('message', "server: "+nome+" si è disconnesso");
     socket.leave(room);
     console.log("disconnesso")
   });
 
+  //cancello tutti i clients conllegati alla stanza
   socket.on('delete',function(room){
     socket.leave(room);
     io.in(room).socketsLeave(room);

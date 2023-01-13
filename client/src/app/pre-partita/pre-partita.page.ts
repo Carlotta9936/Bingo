@@ -26,14 +26,7 @@ export class PrePartitaPage implements OnInit {
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
     this.controllaProprietario();  
-    this.socket.getNewMessage().subscribe((message: string) => {
-      if(message.includes("Il server si è disconnesso")){
-        this.alert.presentAlert("il server si è disconnesso, PARTITA ANNULLATA");
-        this.esci(this.codice);
-      }else{
-        this.messageList.push(message);
-      }
-    });
+    this.messaggi();
     this.socket.stanza(this.codice,JSON.parse(localStorage.getItem('user')!));
   }
 
@@ -53,14 +46,43 @@ export class PrePartitaPage implements OnInit {
     });
   }
 
+  public messaggi():void{
+    this.socket.getNewMessage().subscribe((message: string) => {
+      if(message!=""){
+        if(message.includes("Il server si è disconnesso")){
+          //se il proprietario sono io non devo avvisarmi
+          if(this.proprietario==false){
+            this.alert.presentAlert("il server si è disconnesso, PARTITA ANNULLATA");
+            this.esci(this.codice);
+          }
+        }else{
+          if(message!="server: start"){
+            this.messageList.push(message);
+          }else{
+            //controllo che i giocatori siano abbastanza per poter giocare
+            if(this.database.controllaGiocatori(this.codice)==true){
+              //se la partita inizia devo toglierla dall'elenco delle partite dove posso entrare
+              this.startPartita=true;
+              this.iniziata=true;
+              this.database.eliminaPartita(this.codice);
+            }else{
+              //if(this.proprietario==true){//commentato per colpa del bug con i nomi utente
+                this.alert.presentAlert("non ci sono abbastanza giocatori per poter iniziare la partita. Il numero minimo è: 3");
+              //}
+            }
+          }
+        }
+      }
+    });
+  }
+
   public sendMessage():void {
     this.socket.sendMessage(JSON.parse(localStorage.getItem('user')!)+': '+this.newMessage);
     this.newMessage = '';
   }
 
   public start():void{
-    this.startPartita=true;
-    this.iniziata=true;
+    this.socket.sendMessage("server: start");
   }
 
   public esci(codice: string):void{

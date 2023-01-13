@@ -15,7 +15,5 @@ export class EliminaPartitaService {
     this.database.eliminaPartita(codice);
     this.socket.esci(codice,(JSON.parse(localStorage.getItem('user')!)),true); //true indica che sono il proprietario
     this.router.navigate(['/tabs/tab1']);
-
-    //manca disconnettere gli utenti dalla partita
   }
 }

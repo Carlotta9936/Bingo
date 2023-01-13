@@ -23,7 +23,7 @@ export class SocketService {
 
   public esci(room:string, nome: any, proprietario: boolean):void{
     if(proprietario==true){
-      this.socket.emit('message', "Il server si è disconnesso");
+      this.socket.emit('message', "Il server si è disconnesso, "+nome);
       this.socket.emit('delete',room);
     }else{
       this.socket.emit('leave',room, nome);

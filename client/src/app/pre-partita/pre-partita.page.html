@@ -22,6 +22,9 @@
     <ng-template #elseBlock>-->
       <p>Proprietario: {{this.userProprietario}}</p>
       <ion-button (click)="this.esci(this.codice)">Esci</ion-button>
+      <!-- poi questi 2 bottoni sono da togleire ma mi servono momentaneamente-->
+      <ion-button (click)="this.start()">START PARTITA</ion-button>
+      <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
 
     </ng-template>
     <div *ngIf="this.startPartita==true">
