@@ -33,7 +33,8 @@ export class DatabaseService {
       cognome: cognome,
       mail: mail,
       crediti: 50,
-      timbri: 1,
+      timbri: 2,
+      codiceTimbri: 1, 
       stats: { 
         partiteFatte: 0,
         bingo: 0,

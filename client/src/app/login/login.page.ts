@@ -27,7 +27,7 @@ export class LoginPage implements OnInit {
 
   async login(value: any){
     this.database.getUser(value.username).then((promise) => {
-      console.log("V", promise);
+      //console.log("V", promise);
       try{
         if(promise.password === value.password){
           console.log("Trovato");

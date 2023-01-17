@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { rejects } from 'assert';
 import { Timbro } from '../interfaces/Timbro';
+import { AuthService } from './auth.service';
 import { DatabaseService } from './database.service';
 
 @Injectable({
@@ -12,19 +13,28 @@ export class TimbriService {
   codUtente: number = 1;
   timbriNonAppartiene: Timbro[] = [];
 
-  constructor(public database: DatabaseService ) {
-    this.getCodiceTimbriUtente(localStorage.getItem('user')!).then((value: number) => {
+  constructor(public database: DatabaseService, public auth: AuthService ) {
+    this.getCodiceTimbriUtente(auth.get("user")).then((value: number) => {
       this.codUtente = value;
     })
-
-   // this.getAllTimbri();
-    
-
   }
 
   //Resituisce un array di timbri che l'utente possiede
   appartiene(): any{
-
+    const appartienePromise = new Promise<Timbro[]>((resolve, reject) => {
+      this.getAllTimbri().then((value: Timbro[]) => {
+          let timbri: Timbro[] = [];
+          value.forEach((timbro) => {
+            console.log("codUtente", this.codUtente);
+            if(this.codUtente % timbro.id === 0){
+              timbri.push(timbro);
+            }
+          })
+          resolve (timbri);
+        });
+        
+    })
+    return appartienePromise;
   }
 
   //Resituisce un array di timbri che l'utente non possiede
@@ -69,9 +79,9 @@ export class TimbriService {
 
   public async getCodiceTimbriUtente(user: string): Promise<number>{
     const codUtentePromise = new Promise<number>((resolve, rejects) => {
-      console.log("U", user);
+      console.log("U", "");
       this.database.getUser(user).then((value) => {
-        console.log("t2", value.codiceTimbri);
+        console.log("t2", value);
         resolve (+value.codiceTimbri);
       })
     })
