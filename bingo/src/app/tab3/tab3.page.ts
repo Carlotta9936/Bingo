@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { Timbro } from '../interfaces/Timbro';
 import { User } from '../interfaces/User';
 import { AuthService } from '../services/auth.service';
 import { DatabaseService } from '../services/database.service';
+import { TimbriService } from '../services/timbri.service';
 
 @Component({
   selector: 'app-tab3',
@@ -11,8 +13,9 @@ import { DatabaseService } from '../services/database.service';
 export class Tab3Page {
   user?: User;
   username: string | null = "NO";
+  timbri: Timbro[] = []
 
-  constructor(public Auth: AuthService, public database: DatabaseService) {
+  constructor(public Auth: AuthService, public database: DatabaseService, public timbro: TimbriService) {
     let username = JSON.parse(localStorage.getItem('user')!);
     database.getUser(username).then((value) => {
       let u: User = {
@@ -32,6 +35,10 @@ export class Tab3Page {
         }
       }
       this.user = u;
+    })
+
+    timbro.appartiene().then((value: any) => {
+      this.timbri = value;
     })
 
   }

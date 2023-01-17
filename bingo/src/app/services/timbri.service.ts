@@ -16,15 +16,23 @@ export class TimbriService {
     this.getCodiceTimbriUtente(localStorage.getItem('user')!).then((value: number) => {
       this.codUtente = value;
     })
-
-   // this.getAllTimbri();
-    
-
   }
 
   //Resituisce un array di timbri che l'utente possiede
   appartiene(): any{
-
+    const appartienePromise = new Promise<Timbro[]>((resolve, reject) => {
+      this.getAllTimbri().then((value: Timbro[]) => {
+          let timbri: Timbro[] = [];
+          value.forEach((timbro) => {
+            if(this.codUtente % timbro.id === 0){
+              timbri.push(timbro);
+            }
+          })
+          resolve (timbri);
+        });
+        
+    })
+    return appartienePromise;
   }
 
   //Resituisce un array di timbri che l'utente non possiede
