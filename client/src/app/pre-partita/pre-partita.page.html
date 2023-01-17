@@ -12,7 +12,7 @@
 </div>
 <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()" />
 <button (click)="sendMessage()">Send Message</button>
-  <div *ngIf="this.proprietario==true; then thenBlock else elseBlock"></div>
+  <div *ngIf="this.propr.proprietario==true; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
       <div *ngIf="this.iniziata===false">
         <ion-button (click)="this.start()">START PARTITA</ion-button><!--manca controllo numero giocatori-->
@@ -33,7 +33,7 @@
 
 <ion-content>
   <ion-tabs>
-    <div *ngIf="this.proprietario===false; then thenBlock1 else elseBlock1"></div>
+    <div *ngIf="this.propr.proprietario===false; then thenBlock1 else elseBlock1"></div>
     <ng-template #thenBlock1>
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/../../tabs/tab1']" (click)="this.esci(this.codice)">

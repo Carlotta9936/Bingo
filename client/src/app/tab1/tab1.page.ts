@@ -6,6 +6,7 @@ import { ControlloCreditiService } from '../services/controllo-crediti.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
 import { SocketService } from '../services/socket.service';
+import { ProprietarioService } from '../services/proprietario.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class Tab1Page {
   searchTerm = '';
 
 
-  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alert: AlertService, private socket: SocketService) { }
+  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alert: AlertService, private socket: SocketService, public propr: ProprietarioService) { }
 
   ngOnInit(){
     window.location.reload;
@@ -42,6 +43,7 @@ export class Tab1Page {
         }
       })
     });
+    this.propr.proprietario=true;
   }
 
   //metodo che manda alla stanza prepartita 
@@ -82,5 +84,6 @@ export class Tab1Page {
     }else{
       this.alert.presentAlert('fatti un giro al market, non hai crediti per giocare');
     }
+    this.propr.proprietario=false;
   }
 }

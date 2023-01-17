@@ -17,9 +17,6 @@ export class CreaPartitaService {
   codice: any= "";
   username = JSON.parse(localStorage.getItem('user')!);
 
-
-
-
   constructor(public database: DatabaseService, private route: ActivatedRoute, private router: Router, private Auth:AuthService ) {
     this.db = getDatabase();
   }

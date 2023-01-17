@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
+import { ProprietarioService } from '../services/proprietario.service';
 import { SocketService } from '../services/socket.service';
 
 @Component({
@@ -15,14 +16,13 @@ import { SocketService } from '../services/socket.service';
 export class PrePartitaPage implements OnInit {
 
   codice?:any;
-  proprietario?:boolean;
   userProprietario?:string;
   startPartita:boolean=false;
   iniziata: boolean=false;
   newMessage?: string;
   messageList: string[] = [];
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService, public alert: AlertService, public auth: AuthService) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService, public alert: AlertService, public auth: AuthService, public propr: ProprietarioService) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
@@ -35,12 +35,14 @@ export class PrePartitaPage implements OnInit {
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
+        //faccio nuovamente il controllo sul proprietario per evitare che rifresshando la pagina perda il valore true
+        //l'assegnazione non viene fatta in principio qui perché avverrebbe troppo tardi (perchè è un controllo lento) rispetto
+        //alla creazione della pagina stessa
         if(promise.proprietario==this.auth.get("user")){ 
-          this.proprietario=true;
+          this.propr.proprietario=true;
         }else{
-          this.proprietario=false;
+          this.propr.proprietario=false;
         }
-        console.log(this.proprietario);
       }catch (e){
         console.log("errore"+e);
       }
@@ -52,7 +54,7 @@ export class PrePartitaPage implements OnInit {
       if(message!=""){
         if(message.includes("Il server si è disconnesso")){
           //se il proprietario sono io non devo avvisarmi
-          if(this.proprietario==false){
+          if(this.propr.proprietario==false){
             this.alert.presentAlert("il server si è disconnesso, PARTITA ANNULLATA");
             this.router.navigate(['/tabs/tab1']);
           }
@@ -67,7 +69,7 @@ export class PrePartitaPage implements OnInit {
               this.iniziata=true;
               this.database.eliminaPartita(this.codice);
             }else{
-              if(this.proprietario==true){
+              if(this.propr.proprietario==true){
                 this.alert.presentAlert("non ci sono abbastanza giocatori per poter iniziare la partita. Il numero minimo è: 3");
               }
             }
