@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="this.proprietario==true; then thenBlock else elseBlock"></div>
+  <div *ngIf="this.proprietario===true; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-      <div *ngIf="this.iniziata==false">
+      <div *ngIf="this.iniziata===false">
         <ion-button (click)="this.start()">START PARTITA</ion-button><!--manca controllo numero giocatori-->
       </div>
       <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
@@ -17,7 +17,7 @@
       <ion-button (click)="this.esci(this.codice)">Esci</ion-button>
 
     </ng-template>
-    <div *ngIf="this.startPartita==true">
+    <div *ngIf="this.startPartita===true">
       <app-tabellone></app-tabellone>
     </div>
 </ion-content>
@@ -27,7 +27,7 @@
 
 <ion-content>
   <ion-tabs>
-    <div *ngIf="this.proprietario==false; then thenBlock1 else elseBlock1"></div>
+    <div *ngIf="this.proprietario===false; then thenBlock1 else elseBlock1"></div>
     <ng-template #thenBlock1>
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['/../../tabs/tab1']" (click)="this.esci(this.codice)">
