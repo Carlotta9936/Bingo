@@ -35,7 +35,7 @@ export class PrePartitaPage implements OnInit {
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
-        if(promise.proprietario==this.auth.get("user"),false){ //false indica che non sono il proprietario
+        if(promise.proprietario==this.auth.get("user")){ 
           this.proprietario=true;
         }else{
           this.proprietario=false;
@@ -54,7 +54,7 @@ export class PrePartitaPage implements OnInit {
           //se il proprietario sono io non devo avvisarmi
           if(this.proprietario==false){
             this.alert.presentAlert("il server si è disconnesso, PARTITA ANNULLATA");
-            this.esci(this.codice);
+            this.router.navigate(['/tabs/tab1']);
           }
         }else{
           if(message!="server: start"){
@@ -67,9 +67,9 @@ export class PrePartitaPage implements OnInit {
               this.iniziata=true;
               this.database.eliminaPartita(this.codice);
             }else{
-              //if(this.proprietario==true){//commentato per colpa del bug con i nomi utente
+              if(this.proprietario==true){
                 this.alert.presentAlert("non ci sono abbastanza giocatori per poter iniziare la partita. Il numero minimo è: 3");
-              //}
+              }
             }
           }
         }
