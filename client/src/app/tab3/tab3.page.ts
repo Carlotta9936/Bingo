@@ -15,8 +15,8 @@ export class Tab3Page {
   username: string | null = "NO";
   timbri: Timbro[] = []
 
-  constructor(public Auth: AuthService, public database: DatabaseService, public timbro: TimbriService) {
-    let username = JSON.parse(localStorage.getItem('user')!);
+  constructor(public Auth: AuthService, public database: DatabaseService, public timbro: TimbriService, public auth: AuthService) {
+    let username = this.auth.get("user");
     database.getUser(username).then((value) => {
       let u: User = {
         username: value.username,
