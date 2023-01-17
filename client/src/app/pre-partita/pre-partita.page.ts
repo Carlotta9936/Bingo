@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
+import { AuthService } from '../services/auth.service';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
@@ -21,20 +22,20 @@ export class PrePartitaPage implements OnInit {
   newMessage?: string;
   messageList: string[] = [];
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService, public alert: AlertService) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService, public alert: AlertService, public auth: AuthService) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
     this.controllaProprietario();  
     this.messaggi();
-    this.socket.stanza(this.codice,JSON.parse(localStorage.getItem('user')!));
+    this.socket.stanza(this.codice,this.auth.get("user"));
   }
 
   public controllaProprietario():void{
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
-        if(promise.proprietario==JSON.parse(localStorage.getItem('user')!),false){ //false indica che non sono il proprietario
+        if(promise.proprietario==this.auth.get("user"),false){ //false indica che non sono il proprietario
           this.proprietario=true;
         }else{
           this.proprietario=false;
@@ -77,7 +78,7 @@ export class PrePartitaPage implements OnInit {
   }
 
   public sendMessage():void {
-    this.socket.sendMessage(JSON.parse(localStorage.getItem('user')!)+': '+this.newMessage);
+    this.socket.sendMessage(this.auth.get("user")+': '+this.newMessage);
     this.newMessage = '';
   }
 
@@ -86,7 +87,7 @@ export class PrePartitaPage implements OnInit {
   }
 
   public esci(codice: string):void{
-    this.socket.esci(codice,(JSON.parse(localStorage.getItem('user')!)),false);
+    this.socket.esci(codice,this.auth.get("user"),false);
     //chiamata al db per prendere il numero dei partecipanti
     this.database.getPartita(codice).then((promise) => {
       try{
