@@ -5,6 +5,8 @@ import { DatabaseService } from '../services/database.service';
 import { ControlloCreditiService } from '../services/controllo-crediti.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
+import { SocketService } from '../services/socket.service';
+
 
 @Component({
   selector: 'app-tab1',
@@ -17,9 +19,11 @@ export class Tab1Page {
   partitaCercata?: PartitaData;
   searchTerm = '';
 
-  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alert: AlertService) { }
+
+  constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alert: AlertService, private socket: SocketService) { }
 
   async ngOnInit(){
+    window.location.reload;
     //Carica tutte le partite pubbliche
     this.database.getPartite().then((value) => {
       Object.values(value).forEach((v: any) => {
@@ -65,6 +69,7 @@ export class Tab1Page {
           let numPartecipanti= promise.numPartecipanti;
           //aggiorno il numero dei partecipanti
           this.database.aggiornaPartecipanti(codice, numPartecipanti+1);
+          
           this.router.navigate(['pre-partita/'+codice]);
         }catch (e){
           console.log("errore"+e);

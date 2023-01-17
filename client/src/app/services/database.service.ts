@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { BootstrapOptions, Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
 import { Partita } from '../interfaces/Partita';
 import { collection, doc, docData, Firestore, query, where, getDocs} from '@angular/fire/firestore';
@@ -114,6 +114,19 @@ export class DatabaseService {
       proprietario: partita.proprietario
     });
   }
+
+  controllaGiocatori(codice: string): any{    
+      const cod = ref(this.database, 'partita/'+ codice);
+      onValue(cod, (snapshot) => {
+        console.log("codice" + cod);
+        if(snapshot.val().numPartecipanti>=3){
+          return true;
+        }else{
+          return false;
+        }
+      }); 
+  } 
+
 
   public eliminaPartita(cod: string){
     const partitaRef = ref(this.database, 'partita/'+cod);
