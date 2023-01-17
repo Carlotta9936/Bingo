@@ -3,39 +3,67 @@
     <ion-title><p> Codice partita: {{this.codice}} </p></ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-
-
-  <!--questi bottoni visibili solo se sono il proprietario della partita-->
   <div *ngIf="this.proprietario==true; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-      <ion-button >START PARTITA</ion-button><!--manca controllo numero giocatori-->
+      <div *ngIf="this.iniziata==false">
+        <ion-button (click)="this.start()">START PARTITA</ion-button><!--manca controllo numero giocatori-->
+      </div>
       <ion-button (click)="this.elimina.cancelPartita(this.codice)">ANNULLA PARTITA</ion-button>
     </ng-template>
     <ng-template #elseBlock>
       <p>Proprietario: {{this.userProprietario}}</p>
+      <ion-button (click)="this.esci(this.codice)">Esci</ion-button>
+
     </ng-template>
+    <div *ngIf="this.startPartita==true">
+      <app-tabellone></app-tabellone>
+    </div>
 </ion-content>
+<app-schede></app-schede>
+
 
 
 <ion-content>
   <ion-tabs>
+    <div *ngIf="this.proprietario==false; then thenBlock1 else elseBlock1"></div>
+    <ng-template #thenBlock1>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button [routerLink]="['/../../tabs/tab1']">
+      <ion-tab-button [routerLink]="['/../../tabs/tab1']" (click)="this.esci(this.codice)">
         <ion-icon name="triangle"></ion-icon>
-        <ion-label>Tab 1</ion-label>
+        <ion-label>Home Page</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button [routerLink]="['/../../tabs/tab2']">
+      <ion-tab-button [routerLink]="['/../../tabs/tab2']" (click)="this.esci(this.codice)">
         <ion-icon name="ellipse"></ion-icon>
-        <ion-label>Tab 2</ion-label>
+        <ion-label>Market</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button [routerLink]="['/../../tabs/tab3']">
+      <ion-tab-button [routerLink]="['/../../tabs/tab3']" (click)="this.esci(this.codice)">
         <ion-icon name="square"></ion-icon>
-        <ion-label>Tab 3</ion-label>
+        <ion-label>Profilo</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
+    </ng-template>
+    <ng-template #elseBlock1>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button [routerLink]="['/../../tabs/tab1']" (click)="this.elimina.cancelPartita(this.codice)">
+          <ion-icon name="triangle"></ion-icon>
+          <ion-label>Home Page</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button [routerLink]="['/../../tabs/tab2']" (click)="this.elimina.cancelPartita(this.codice)">
+          <ion-icon name="ellipse"></ion-icon>
+          <ion-label>Market</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button [routerLink]="['/../../tabs/tab3']" (click)="this.elimina.cancelPartita(this.codice)">
+          <ion-icon name="square"></ion-icon>
+          <ion-label>Profilo</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ng-template>
   
   </ion-tabs>
   

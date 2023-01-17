@@ -14,6 +14,7 @@ export class CreditiComponent implements OnInit {
     this.crediti = localStorage.getItem('crediti');
    }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }

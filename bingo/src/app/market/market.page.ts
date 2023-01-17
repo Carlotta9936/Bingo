@@ -3,6 +3,7 @@ import { Timbro } from '../interfaces/Timbro';
 import { ControlloCreditiService } from '../services/controllo-crediti.service';
 import { DatabaseService } from '../services/database.service';
 import { TimbriService } from '../services/timbri.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-market',
@@ -14,7 +15,7 @@ export class MarketPage implements OnInit {
   crediti: number;
   timbriAcq: Timbro[] = [];
 
-  constructor(public database: DatabaseService, public timbri: TimbriService, public controlloCrediti: ControlloCreditiService) {
+  constructor(public database: DatabaseService, public timbri: TimbriService, public controlloCrediti: ControlloCreditiService, private alert: AlertService) {
     //+ converte in int, ! non è null
     this.crediti = +localStorage.getItem('crediti')!
   }
@@ -28,10 +29,10 @@ export class MarketPage implements OnInit {
     if(this.controlloCrediti.autorizzaOperazione(crediti)){
         //Aggiungi timbra a lista timbri
         this.timbri.aggiungiTimbro(localStorage.getItem('user')!, idTimbro)
-        window.alert("Nuovo timbro acquistato");
+        //window.alert("Nuovo timbro acquistato");
         window.location.reload();
       } else {
-        window.alert("Mi dispiace ma non ti puoi permettere questo timbro");
+        this.alert.presentAlert("Mi dispiace ma non ti puoi permettere questo timbro");
       }
     }
 

@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>creaPartita</ion-title>
+    <ion-title>
+      <img src="../../assets/logo.png">
+    </ion-title>
   </ion-toolbar>
 </ion-header>
+<p id="titolo">Crea partita</p>
 
 <ion-content class="bottoni">
     <ion-button class="tipo" (click)="this.crea.setPublic()" > Pubblica </ion-button>
@@ -17,17 +20,17 @@
     <ion-tab-bar slot="bottom">
       <ion-tab-button [routerLink]="['../tabs/tab1']">
         <ion-icon name="triangle"></ion-icon>
-        <ion-label>Tab 1</ion-label>
+        <ion-label>Home Page</ion-label>
       </ion-tab-button>
   
       <ion-tab-button [routerLink]="['../tabs/tab2']">
         <ion-icon name="ellipse"></ion-icon>
-        <ion-label>Tab 2</ion-label>
+        <ion-label>Market</ion-label>
       </ion-tab-button>
   
       <ion-tab-button [routerLink]="['../tabs/tab3']">
         <ion-icon name="square"></ion-icon>
-        <ion-label>Tab 3</ion-label>
+        <ion-label>Profilo</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   

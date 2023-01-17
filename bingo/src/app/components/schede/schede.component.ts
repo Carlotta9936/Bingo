@@ -12,7 +12,9 @@ export class SchedeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.compraScheda();
+  }
 
   compraScheda(): any{
     this.numeroSchede.push(0);

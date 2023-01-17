@@ -23,15 +23,15 @@ const routes: Routes = [
   },
   {
     path: 'crea-partita',
-    loadChildren: () => import('./crea-partita/crea-partita.module').then( m => m.CreaPartitaPageModule)
+    loadChildren: () => import('./crea-partita/crea-partita.module').then( m => m.CreaPartitaPageModule),canActivate: [GuardiaService]
   },
   {
     path: 'market',
-    loadChildren: () => import('./market/market.module').then( m => m.MarketPageModule)
+    loadChildren: () => import('./market/market.module').then( m => m.MarketPageModule),canActivate: [GuardiaService]
   },
   {
     path: 'pre-partita/:codice',
-    loadChildren: () => import('./pre-partita/pre-partita.module').then( m => m.PrePartitaPageModule)
+    loadChildren: () => import('./pre-partita/pre-partita.module').then( m => m.PrePartitaPageModule), canActivate: [GuardiaService]
   },
 
   

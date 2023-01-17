@@ -7,14 +7,9 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { RegistrazionePageModule } from '../registrazione/registrazione.module';
-import { SchedaComponent } from '../components/scheda/scheda.component';
-import { SchedeComponent } from '../components/schede/schede.component';
-import { CasellaComponent } from '../components/casella/casella.component';
-import { TabelloneComponent } from '../components/tabellone/tabellone.component';
-import { CellaComponent } from '../components/cella/cella.component';
 
 @NgModule({
-    declarations: [Tab2Page, SchedaComponent, SchedeComponent, CasellaComponent, TabelloneComponent, CellaComponent],
+    declarations: [Tab2Page],
     imports: [
         IonicModule,
         CommonModule,

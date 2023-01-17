@@ -10,6 +10,7 @@ export class ControlloCreditiService {
 
   //Recupera i crediti di un utente
   prendiCrediti(){
+    console.log("crediti"+localStorage.getItem('crediti'));
     return +localStorage.getItem('crediti')!
   }
 
@@ -32,4 +33,6 @@ export class ControlloCreditiService {
     //Aggiornare local data
     localStorage.setItem("crediti", ""+newCrediti);
   }
+
+
 }
