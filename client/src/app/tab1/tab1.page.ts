@@ -22,9 +22,13 @@ export class Tab1Page {
 
   constructor(public crea: CreaPartitaService, public database: DatabaseService, public crediti: ControlloCreditiService, private router: Router, private alert: AlertService, private socket: SocketService) { }
 
-  async ngOnInit(){
+  ngOnInit(){
     window.location.reload;
-    //Carica tutte le partite pubbliche
+    this.caricaPartite();
+  }
+
+  //Carica tutte le partite pubbliche
+  public caricaPartite(): void{
     this.database.getPartite().then((value) => {
       Object.values(value).forEach((v: any) => {
         if(v.pubblica===true){

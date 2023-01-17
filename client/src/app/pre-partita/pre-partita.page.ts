@@ -75,6 +75,7 @@ export class PrePartitaPage implements OnInit {
         }
       }
     });
+    this.messageList=[];
   }
 
   public sendMessage():void {
@@ -99,5 +100,6 @@ export class PrePartitaPage implements OnInit {
         console.log("errore"+e);
       }
     });
+    this.messageList=[];
   }
 }
