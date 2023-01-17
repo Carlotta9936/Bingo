@@ -11,7 +11,7 @@ export class CreditiComponent implements OnInit {
   crediti
 
   constructor(private Auth:AuthService) {
-    this.crediti = localStorage.getItem('crediti');
+    this.crediti = +this.Auth.get("crediti");
    }
 
   ngOnInit() {

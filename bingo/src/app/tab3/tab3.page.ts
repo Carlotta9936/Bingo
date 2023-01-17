@@ -32,9 +32,12 @@ export class Tab3Page {
           cinquine: this.isZero(value.stats.cinquine),
           superbingo: this.isZero(value.stats.superbingo),
           maxVincita: this.isZero(value.stats.maxVincita)
-        }
+        },
+        codiceTimbri: value.codiceTimbri,
       }
       this.user = u;
+
+
     })
 
     timbro.appartiene().then((value: any) => {

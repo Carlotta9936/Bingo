@@ -6,6 +6,7 @@ export interface User {
     mail: string;
     crediti: number;
     timbri: number;
+    codiceTimbri: number;
     stats: {
         partiteFatte: number;
         bingo: number;

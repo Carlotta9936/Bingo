@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../interfaces/User';
-import { tap } from 'rxjs/operators';
 
 const $ApiUrl = 'http://localhost:3000';
 
@@ -18,11 +15,12 @@ export class AuthService {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
-  public get(key: string){
-    localStorage.getItem(key);
+  public get(key: string): string{
+    console.log("get", JSON.parse(localStorage.getItem(key)!));
+    return JSON.parse(localStorage.getItem(key)!)
   }
 
-  public deleteUser(key: string): any{
+  public delete(key: string): any{
     localStorage.removeItem(key);
   }
 

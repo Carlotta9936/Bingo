@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 import { DatabaseService } from './database.service';
 
 @Injectable({
@@ -6,12 +7,12 @@ import { DatabaseService } from './database.service';
 })
 export class ControlloCreditiService {
 
-  constructor(public database: DatabaseService) { }
+  constructor(public database: DatabaseService, public Auth: AuthService) { }
 
   //Recupera i crediti di un utente
   prendiCrediti(){
     console.log("crediti"+localStorage.getItem('crediti'));
-    return +localStorage.getItem('crediti')!
+    return +this.Auth.get("crediti");
   }
 
 
@@ -29,9 +30,10 @@ export class ControlloCreditiService {
   aggiornaCrediti(val: number): void{
     let newCrediti = this.prendiCrediti() - val
     //Aggiornare DB
-    this.database.aggiornaCrediti(localStorage.getItem('user')!, newCrediti);
+    this.database.aggiornaCrediti(this.Auth.get("user"), newCrediti);
     //Aggiornare local data
-    localStorage.setItem("crediti", ""+newCrediti);
+    this.Auth.set("crediti", ""+newCrediti);
+    //localStorage.setItem("crediti", ""+newCrediti);
   }
 
 

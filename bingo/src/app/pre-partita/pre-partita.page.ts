@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
@@ -17,7 +18,7 @@ export class PrePartitaPage implements OnInit {
   startPartita:boolean=false;
   iniziata: boolean=false;
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, public auth: AuthService) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
@@ -28,7 +29,7 @@ export class PrePartitaPage implements OnInit {
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
-        if(promise.proprietario==JSON.parse(localStorage.getItem('user')!)){
+        if(promise.proprietario==this.auth.get("user")){
           this.proprietario=true;
         }else{
           this.proprietario=false;
