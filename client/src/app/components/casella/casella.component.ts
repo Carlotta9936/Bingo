@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Casella } from 'src/app/interfaces/Casella';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-casella',
@@ -12,7 +13,11 @@ export class CasellaComponent implements OnInit {
 
   @Output() segnato = new EventEmitter<number>()
 
-  constructor() { }
+  timbro: string;
+  
+  constructor(public Auth: AuthService) {
+    this.timbro = Auth.get("timbro");
+   }
 
   ngOnInit() {}
 

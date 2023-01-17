@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-scelta-timbro',
@@ -8,8 +9,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SceltaTimbroComponent implements OnInit {
 
   @Input() url?: string;
-  constructor() { }
+  constructor(public Auth: AuthService) { }
 
   ngOnInit() {}
+
+  seleziona(): void{
+    console.log("Seleziona");
+    this.Auth.set("timbro", this.url)
+  }
 
 }
