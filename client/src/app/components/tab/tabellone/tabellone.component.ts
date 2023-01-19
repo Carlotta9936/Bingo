@@ -22,8 +22,6 @@ export class TabelloneComponent implements OnInit {
   timeLeft: number = 1;
   interval?: any;
 
-  
-
   constructor(public bossolo: BossoloService, private http: HttpClient, public database: DatabaseService) { 
     for(let i=1;i<=90;i++){
       this.numeri.push(i);
@@ -34,41 +32,9 @@ export class TabelloneComponent implements OnInit {
 
   ngOnInit() {
     console.log("VAI");
-    this.startTimer();
+    //this.startTimer();
   }
 
-  estrazione(): void{
-    this.estratto=this.bossolo.estraiNumero();
-    let stato: Partita = {
-      ultimoNumero: this.estratto, 
-      numeriEstratti: this.numeriEstratti+1,
-      cinquina: this.cinquina,
-      bingo: this.bingo
-    };
 
-    this.database.aggiornaPartita(stato);
-    console.log("Estrazione");
-
-    window.location.reload;
-  }
-
-  startTimer():void {
-    this.interval = setInterval(() => {
-      if(this.bossolo.bossolo.length!=0){
-        if(this.timeLeft > 0) {
-          this.timeLeft--;
-          //console.log("tempo"+this.timeLeft);
-        } else {
-          this.timeLeft = 1;
-          this.estrazione();
-        }
-      }else{
-        this.stopTimer;
-      }
-    },1000)
-  }
-
-  stopTimer(): void{
-    clearInterval(this.interval);
-  }
+  
 }

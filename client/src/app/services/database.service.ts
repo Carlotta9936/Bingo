@@ -116,15 +116,18 @@ export class DatabaseService {
   }
 
   controllaGiocatori(codice: string): any{    
-      const cod = ref(this.database, 'partita/'+ codice);
-      onValue(cod, (snapshot) => {
-        console.log("codice" + cod);
-        if(snapshot.val().numPartecipanti>=3){
-          return true;
-        }else{
-          return false;
-        }
-      }); 
+    let ritorno;
+    const cod = ref(this.database, 'partita/'+ codice);
+    onValue(cod, (snapshot) => {
+      console.log("codice" + cod);
+      if(snapshot.val().numPartecipanti>=3){
+        console.log("TRUE");
+        ritorno = true;
+      }else{
+        ritorno = false;
+      }
+    }); 
+    return ritorno;
   } 
 
 

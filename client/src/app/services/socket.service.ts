@@ -37,6 +37,10 @@ export class SocketService {
     });
     return this.message$.asObservable();
   };
+
+  public estraiNumero(numero: number, room: string): void{
+    this.socket.emit('message', 'Estratto: ' + numero);
+  }
 }
 
   

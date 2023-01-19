@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Casella } from 'src/app/interfaces/Casella';
 import { Partita } from 'src/app/interfaces/Partita';
 import { DatabaseService } from 'src/app/services/database.service';
-import { SchedaService } from '../../services/scheda.service';
+import { SchedaService } from '../../../services/scheda.service';
 
 @Component({
   selector: 'app-scheda',

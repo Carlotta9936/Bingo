@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../services/alert.service';
 import { AuthService } from '../services/auth.service';
+import { BossoloService } from '../services/bossolo.service';
 import { CreaPartitaService } from '../services/crea-partita.service';
 import { DatabaseService } from '../services/database.service';
 import { EliminaPartitaService } from '../services/elimina-partita.service';
@@ -22,11 +23,15 @@ export class PrePartitaPage implements OnInit {
   newMessage?: string;
   messageList: string[] = [];
 
-  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, private database: DatabaseService, private router: Router, private socket: SocketService, public alert: AlertService, public auth: AuthService, public propr: ProprietarioService) { }
+  constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, 
+    private database: DatabaseService, private router: Router, private socket: SocketService, 
+    public alert: AlertService, public auth: AuthService, public propr: ProprietarioService,
+     public bossolo: BossoloService) { }
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
-    this.controllaProprietario();  
+    this.controllaProprietario();
+    //this.ascolta.messaggi(this.codice);  
     this.messaggi();
     this.socket.stanza(this.codice,this.auth.get("user"));
   }
@@ -52,7 +57,10 @@ export class PrePartitaPage implements OnInit {
   public messaggi():void{
     this.socket.getNewMessage().subscribe((message: string) => {
       if(message!=""){
-        if(message.includes("Il server si è disconnesso")){
+        if(message.includes("Estratto")){
+          let messaggio = message.split(": ");
+          this.bossolo.ascoltaNumero(+messaggio[1]);
+        } else if(message.includes("Il server si è disconnesso")){
           //se il proprietario sono io non devo avvisarmi
           if(this.propr.proprietario==false){
             this.alert.presentAlert("il server si è disconnesso, PARTITA ANNULLATA");
@@ -87,6 +95,8 @@ export class PrePartitaPage implements OnInit {
 
   public start():void{
     this.socket.sendMessage("server: start");
+    this.bossolo.startTimer();
+
   }
 
   public esci(codice: string):void{

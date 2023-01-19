@@ -7,8 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { MarketPageRoutingModule } from './market-routing.module';
 
 import { MarketPage } from './market.page';
-import { AcquistoTimbroComponent } from '../components/acquisto-timbro/acquisto-timbro.component';
-import { AcquistoCreditiComponent } from '../components/acquisto-crediti/acquisto-crediti.component';
+import { AcquistoTimbroComponent } from '../components/market/acquisto-timbro/acquisto-timbro.component';
+import { AcquistoCreditiComponent } from '../components/market/acquisto-crediti/acquisto-crediti.component';
 
 @NgModule({
   imports: [
