@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Casella } from 'src/app/interfaces/Casella';
 import { Partita } from 'src/app/interfaces/Partita';
 import { DatabaseService } from 'src/app/services/database.service';
+import { GeneratoreCartellaService } from 'src/app/services/generatore-cartella.service';
 import { SchedaService } from '../../../services/scheda.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class SchedaComponent implements OnInit {
   timeLeft: number = 3;
   interval?: any;
 
-  constructor(public scheda: SchedaService, private http: HttpClient, public database: DatabaseService) {
+  constructor(public scheda: SchedaService, public generatore: GeneratoreCartellaService, private http: HttpClient, public database: DatabaseService) {
   }
 
   ngOnInit() {
@@ -28,7 +29,8 @@ export class SchedaComponent implements OnInit {
   }
 
   getScheda(): any{
-    this.numeri = this.scheda.getNumeriCartella();
+    this.numeri = this.generatore.getCartella();
+    console.log(this.numeri);
     this.numeri.forEach(n => {
       let casella: Casella = {
         numero: n, 
