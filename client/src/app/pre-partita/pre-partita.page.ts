@@ -30,7 +30,7 @@ export class PrePartitaPage implements OnInit {
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
-    this.controllaProprietario();
+    this.controllaProprietario();  
     //this.ascolta.messaggi(this.codice);  
     this.messaggi();
     this.socket.stanza(this.codice,this.auth.get("user"));
@@ -43,10 +43,12 @@ export class PrePartitaPage implements OnInit {
         //faccio nuovamente il controllo sul proprietario per evitare che rifresshando la pagina perda il valore true
         //l'assegnazione non viene fatta in principio qui perché avverrebbe troppo tardi (perchè è un controllo lento) rispetto
         //alla creazione della pagina stessa
-        if(promise.proprietario==this.auth.get("user")){ 
-          this.propr.proprietario=true;
-        }else{
-          this.propr.proprietario=false;
+        if(this.propr.proprietario!=true){
+          if(promise.proprietario==this.auth.get("user")){ 
+            this.propr.proprietario=true;
+          }else{
+            this.propr.proprietario=false;
+          }
         }
       }catch (e){
         console.log("errore"+e);
