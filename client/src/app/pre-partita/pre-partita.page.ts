@@ -22,6 +22,7 @@ export class PrePartitaPage implements OnInit {
   iniziata: boolean=false;
   newMessage?: string;
   messageList: string[] = [];
+  chat: boolean= true;
 
   constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, 
     private database: DatabaseService, private router: Router, private socket: SocketService, 
@@ -31,7 +32,6 @@ export class PrePartitaPage implements OnInit {
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
     this.controllaProprietario();  
-    //this.ascolta.messaggi(this.codice);  
     this.messaggi();
     this.socket.stanza(this.codice,this.auth.get("user"));
   }
@@ -40,7 +40,7 @@ export class PrePartitaPage implements OnInit {
     this.database.getPartita(this.codice).then((promise) => {
       try{
         this.userProprietario=promise.proprietario;
-        //faccio nuovamente il controllo sul proprietario per evitare che rifresshando la pagina perda il valore true
+        //faccio nuovamente il controllo sul proprietario per evitare che refresshando la pagina perda il valore true
         //l'assegnazione non viene fatta in principio qui perché avverrebbe troppo tardi (perchè è un controllo lento) rispetto
         //alla creazione della pagina stessa
         if(this.propr.proprietario!=true){
@@ -72,8 +72,12 @@ export class PrePartitaPage implements OnInit {
           if(message!="server: start"){
             this.messageList.push(message);
           }else{
+            //devo toglierli
+            this.startPartita=true;
+              this.iniziata=true;
+              this.database.eliminaPartita(this.codice);
             //controllo che i giocatori siano abbastanza per poter giocare
-            if(this.database.controllaGiocatori(this.codice)==true){
+            /*if(this.database.controllaGiocatori(this.codice)==true){
               //se la partita inizia devo toglierla dall'elenco delle partite dove posso entrare
               this.startPartita=true;
               this.iniziata=true;
@@ -82,7 +86,7 @@ export class PrePartitaPage implements OnInit {
               if(this.propr.proprietario==true){
                 this.alert.presentAlert("non ci sono abbastanza giocatori per poter iniziare la partita. Il numero minimo è: 3");
               }
-            }
+            }*/
           }
         }
       }
@@ -97,6 +101,7 @@ export class PrePartitaPage implements OnInit {
 
   public start():void{
     this.socket.sendMessage("server: start");
+    this.chat=false;
     this.bossolo.startTimer();
 
   }
@@ -115,5 +120,14 @@ export class PrePartitaPage implements OnInit {
       }
     });
     this.messageList=[];
+  }
+
+  public visualizzaChat():void{
+    if(this.chat==true){
+      this.chat=false;
+    }else{
+      this.chat=true;
+    }
+
   }
 }
