@@ -62,6 +62,8 @@ export class PrePartitaPage implements OnInit {
         if(message.includes("Estratto")){
           let messaggio = message.split(": ");
           this.bossolo.ascoltaNumero(+messaggio[1]);
+          this.bossolo.estratto=messaggio[1];
+          //this.scheda.controllaNumero(Number(messaggio[1]));
         } else if(message.includes("Il server si è disconnesso")){
           //se il proprietario sono io non devo avvisarmi
           if(this.propr.proprietario==false){

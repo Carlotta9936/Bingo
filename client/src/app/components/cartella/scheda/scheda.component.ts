@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Casella } from 'src/app/interfaces/Casella';
 import { Partita } from 'src/app/interfaces/Partita';
+import { BossoloService } from 'src/app/services/bossolo.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { SchedaService } from '../../../services/scheda.service';
 
 @Component({
@@ -18,13 +20,16 @@ export class SchedaComponent implements OnInit {
   timeLeft: number = 3;
   interval?: any;
 
-  constructor(public scheda: SchedaService, private http: HttpClient, public database: DatabaseService) {
+  constructor(public scheda: SchedaService, private http: HttpClient, public database: DatabaseService,
+     private socket: SocketService, public bossolo: BossoloService) {
   }
 
   ngOnInit() {
     this.getScheda();
+    console.log("topolno");
+    this.listenNumero();
     //this.caselle = this.aggiungiVuote(this.numeri);
-    this.startTimer();
+    //this.startTimer();
   }
 
   getScheda(): any{
@@ -84,13 +89,37 @@ export class SchedaComponent implements OnInit {
   }
 
   //Controlla se l'ultimo numero estratto è presente nella cartella
-  controllaNumero(numero: number): void {
+  controllaNumero(numero: any): void {
+    console.log("numero"+numero);
     this.caselle.forEach(casella => {
       if(casella.numero === numero && casella.stato==="numero"){
         console.log("Ce  l'hai")
         casella.stato = "estratta";
       }
-    })
+    });
+
+  }
+
+  public listenNumero():void{
+    //this.controllaNumero(this.bossolo.estratto).subscribe();
+    let obs=this.bossolo.ritornaNumero();
+    obs.subscribe((estratto)=>{
+              console.log("number"+estratto);
+        this.controllaNumero(Number(estratto));
+    });
+    /*obs.subscribe((estratto: number)=>{
+      //next(estratto){
+        console.log("number"+estratto);
+        this.controllaNumero(estratto);
+      //}
+      
+    });
+    /*this.socket.getNewMessage().subscribe((message: string) => {
+      console.log("messaggio"+message);
+      if(message.includes("Estratto")){
+        let messaggio = message.split(": ");
+      }
+    });*/
   }
 
 

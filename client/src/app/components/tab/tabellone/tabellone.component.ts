@@ -32,7 +32,6 @@ export class TabelloneComponent implements OnInit {
 
   ngOnInit() {
     console.log("VAI");
-    //this.startTimer();
   }
 
 

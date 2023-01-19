@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { SocketService } from './socket.service';
 
@@ -7,6 +8,7 @@ import { SocketService } from './socket.service';
 })
 export class BossoloService {
 
+  estratto?: string;
   bossolo: number[]=[];
   tabellone: boolean[]=[];
 
@@ -15,7 +17,7 @@ export class BossoloService {
 
   constructor(public socket: SocketService, 
               public auth: AuthService //per test
-    ) {
+    ){
     //creo un array con tutti i numeri estraibili 
     //e inizializzo il tabellone a true
       for(let i=1;i<91;i++){
@@ -70,9 +72,18 @@ export class BossoloService {
     this.tabellone[numero]=true;
   }
 
+
   ascoltaNumero(index: number): any{
     let numero= this.bossolo[index];
     this.segnaNumero(numero);
     this.bossolo.splice(index,1);
+  }
+
+  ritornaNumero(): Observable<number>{
+    const numeroEstratto=new Observable<number>((observer)=>{
+      let numero=Number(this.estratto);
+      observer.next(numero);
+    })
+    return numeroEstratto;
   }
 }

@@ -4,8 +4,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<div *ngIf="this.chat==true" id="chat">
+<ion-content id="chat">
+<div *ngIf="this.chat==true">
   <div *ngFor="let message of messageList">
     <li>
         {{message}}
