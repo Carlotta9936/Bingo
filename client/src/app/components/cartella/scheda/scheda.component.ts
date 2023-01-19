@@ -4,7 +4,11 @@ import { Casella } from 'src/app/interfaces/Casella';
 import { Partita } from 'src/app/interfaces/Partita';
 import { BossoloService } from 'src/app/services/bossolo.service';
 import { DatabaseService } from 'src/app/services/database.service';
+<<<<<<< HEAD
 import { SocketService } from 'src/app/services/socket.service';
+=======
+import { GeneratoreCartellaService } from 'src/app/services/generatore-cartella.service';
+>>>>>>> acbbf92df531cadd64ed5ccd1fba57b63e8384a1
 import { SchedaService } from '../../../services/scheda.service';
 
 @Component({
@@ -20,8 +24,7 @@ export class SchedaComponent implements OnInit {
   timeLeft: number = 3;
   interval?: any;
 
-  constructor(public scheda: SchedaService, private http: HttpClient, public database: DatabaseService,
-     private socket: SocketService, public bossolo: BossoloService) {
+  constructor(public scheda: SchedaService, public generatore: GeneratoreCartellaService, private http: HttpClient, public database: DatabaseService) {
   }
 
   ngOnInit() {
@@ -33,7 +36,8 @@ export class SchedaComponent implements OnInit {
   }
 
   getScheda(): any{
-    this.numeri = this.scheda.getNumeriCartella();
+    this.numeri = this.generatore.getCartella();
+    console.log(this.numeri);
     this.numeri.forEach(n => {
       let casella: Casella = {
         numero: n, 
