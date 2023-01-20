@@ -25,7 +25,7 @@ export class TabelloneComponent implements OnInit {
   constructor(public bossolo: BossoloService, private http: HttpClient, public database: DatabaseService) { 
     for(let i=1;i<=90;i++){
       this.numeri.push(i);
-      console.log("costruttore"+i);
+      //console.log("costruttore"+i);
     }
     this.estratti=this.bossolo.tabellone;
   }

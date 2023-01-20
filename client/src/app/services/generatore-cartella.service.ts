@@ -179,8 +179,6 @@ export class GeneratoreCartellaService {
 
 
     for(let i = contaBianche; i > 4; i--){
-      console.log("i", i);
-      console.log("COL", colonne.length);
       let index = Math.floor(Math.random() * (colonne.length));
       console.log(index, colonne, colonne[index]);
       if(matrice[2][colonne[index]] === 0){
@@ -209,10 +207,7 @@ export class GeneratoreCartellaService {
       }
     })
     for(let i = contaBianche; i > 4; i--){
-      console.log("i", i);
-      console.log("COL", colonne.length);
       let index = Math.floor(Math.random() * (colonne.length));
-      console.log(index, colonne, colonne[index]);
       if(matrice[1][colonne[index]] === 0){
         if(matrice[0][colonne[index]] !== 0) {
           matrice[1][colonne[index]] = matrice[0][colonne[index]];

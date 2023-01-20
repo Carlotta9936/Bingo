@@ -100,8 +100,6 @@ export class SchedaService {
           rigaDecine++;
       }
     }
-      
-    console.log("Inserisco numero")
     nuovoArray.push(numero);
  
     })

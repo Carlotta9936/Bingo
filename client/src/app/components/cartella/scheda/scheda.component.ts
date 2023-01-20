@@ -4,11 +4,8 @@ import { Casella } from 'src/app/interfaces/Casella';
 import { Partita } from 'src/app/interfaces/Partita';
 import { BossoloService } from 'src/app/services/bossolo.service';
 import { DatabaseService } from 'src/app/services/database.service';
-<<<<<<< HEAD
 import { SocketService } from 'src/app/services/socket.service';
-=======
 import { GeneratoreCartellaService } from 'src/app/services/generatore-cartella.service';
->>>>>>> acbbf92df531cadd64ed5ccd1fba57b63e8384a1
 import { SchedaService } from '../../../services/scheda.service';
 
 @Component({
@@ -24,7 +21,7 @@ export class SchedaComponent implements OnInit {
   timeLeft: number = 3;
   interval?: any;
 
-  constructor(public scheda: SchedaService, public generatore: GeneratoreCartellaService, private http: HttpClient, public database: DatabaseService) {
+  constructor(public scheda: SchedaService, public generatore: GeneratoreCartellaService, private http: HttpClient, public database: DatabaseService, public bossolo: BossoloService) {
   }
 
   ngOnInit() {
@@ -46,7 +43,7 @@ export class SchedaComponent implements OnInit {
       this.caselle.push(casella);
     });
       //console.log("casella", );
-    console.log("CC" + this.caselle);
+      //console.log("CC" + this.caselle);
   }
 
   aggiungiVuote(numeri: number[]): any{
@@ -94,7 +91,7 @@ export class SchedaComponent implements OnInit {
 
   //Controlla se l'ultimo numero estratto è presente nella cartella
   controllaNumero(numero: any): void {
-    console.log("numero"+numero);
+    //console.log("numero"+numero);
     this.caselle.forEach(casella => {
       if(casella.numero === numero && casella.stato==="numero"){
         console.log("Ce  l'hai")

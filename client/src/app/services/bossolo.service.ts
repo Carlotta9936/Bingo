@@ -23,7 +23,6 @@ export class BossoloService {
       for(let i=1;i<91;i++){
         this.bossolo.push(i);
         this.tabellone.push(false);
-        console.log("i"+i);
       }
       console.log(this.tabellone);
    }
@@ -75,14 +74,17 @@ export class BossoloService {
 
   ascoltaNumero(index: number): any{
     let numero= this.bossolo[index];
-    this.segnaNumero(numero);
+    this.segnaNumero(index);
     this.bossolo.splice(index,1);
   }
 
   ritornaNumero(): Observable<number>{
     const numeroEstratto=new Observable<number>((observer)=>{
-      let numero=Number(this.estratto);
-      observer.next(numero);
+      setInterval(() => {
+        let numero=Number(this.estratto);
+        console.log("NuMeRo", numero);
+        observer.next(numero);
+      }, 1000)
     })
     return numeroEstratto;
   }
