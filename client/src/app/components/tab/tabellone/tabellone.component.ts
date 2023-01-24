@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BossoloService } from 'src/app/services/bossolo.service';
 import { HttpClient } from '@angular/common/http';
-import { Partita } from 'src/app/interfaces/Partita';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -30,19 +29,8 @@ export class TabelloneComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    //throw new Error('Method not implemented.');
     console.log("DISTRUGGI TABELLONE")
-   /* this.estratto =0;
-    this.numeri=[];
-    this.estratti=[];
-    this.numeriEstratti = 0;
-
-    this.cinquina = null;
-    this.bingo = null;
-
-    this.timeLeft = 1;*/
     this.bossolo.tabelloneVuoto();
-
   }
   
   ngOnInit() {
