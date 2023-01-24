@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SchedaComponent } from '../components/cartella/scheda/scheda.component';
 import { AuthService } from './auth.service';
 import { SocketService } from './socket.service';
 
@@ -18,7 +19,7 @@ export class BossoloService {
   speaker: any;
 
   constructor(public socket: SocketService, 
-              public auth: AuthService //per test
+              public auth: AuthService, //per test
     ){
     //creo un array con tutti i numeri estraibili 
     //e inizializzo il tabellone a false
@@ -53,7 +54,6 @@ export class BossoloService {
       if(this.bossolo.length!=0){
         if(this.timeLeft > 0) {
           this.timeLeft--;
-          //console.log("tempo"+this.timeLeft);
         } else {
           this.timeLeft = 1;
           this.estrazione();
@@ -76,7 +76,6 @@ export class BossoloService {
 
   //Ascolta il numero fa tutte le modifiche
   ascoltaNumero(index: number): any{
-    //let numero= this.bossolo[index];
     this.segnaNumero(index);
     this.bossolo.splice(index,1);
   }
@@ -91,6 +90,10 @@ export class BossoloService {
       }, 1000)
     })
     return numeroEstratto;
+  }
+
+  accendiSpeaker(): void {
+    
   }
 
   //Spegne l'Interval per la comunicazione dei numeri

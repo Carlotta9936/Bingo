@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Casella } from 'src/app/interfaces/Casella';
-import { Partita } from 'src/app/interfaces/Partita';
 import { BossoloService } from 'src/app/services/bossolo.service';
 import { DatabaseService } from 'src/app/services/database.service';
-import { SocketService } from 'src/app/services/socket.service';
 import { GeneratoreCartellaService } from 'src/app/services/generatore-cartella.service';
 import { Observable, Subscription } from 'rxjs';
 
@@ -13,6 +11,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './scheda.component.html',
   styleUrls: ['./scheda.component.scss'],
 })
+
 export class SchedaComponent implements OnInit, OnDestroy {
 
   //Cartella
@@ -37,16 +36,6 @@ export class SchedaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getScheda();
-    let sub = this.bossolo.ritornaNumero()
-    .subscribe((estratto)=>{
-      console.log("number"+estratto);
-      if(this.numeri.includes(estratto)){
-        this.segnaNumero(Number(estratto));
-      }
-    })
-    this.obs?.push(sub)
-      
-    
   }
 
   ngOnDestroy(): void {
@@ -79,7 +68,14 @@ export class SchedaComponent implements OnInit, OnDestroy {
 
   //Utilizza un Observer per controllare l'ultimo numero estratto
   public listenNumero():void{
-    
+    let sub = this.bossolo.ritornaNumero()
+    .subscribe((estratto)=>{
+      console.log("number"+estratto);
+      if(this.numeri.includes(estratto)){
+        this.segnaNumero(Number(estratto));
+      }
+    })
+    this.obs?.push(sub)
   }
 
   //Bisogna spegnere il subscribe

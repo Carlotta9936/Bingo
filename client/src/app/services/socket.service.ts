@@ -8,10 +8,22 @@ import { io } from "socket.io-client";
 export class SocketService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
 
-  constructor() {}
+  ipAddress: string = "";
 
-  socket = io('http://localhost:3000');
+  constructor() {
+    this.setIP();
+  }
+  async setIP(): Promise<void> {
+    this.ipAddress = await this.getIPAddress();
+  }
 
+  async getIPAddress(): Promise<any> {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  }
+
+  socket = io(`http://${this.ipAddress}:3000`);
 
   public sendMessage(message: any) {
     this.socket.emit('message', message);

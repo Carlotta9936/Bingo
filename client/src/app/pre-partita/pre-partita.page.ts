@@ -109,7 +109,6 @@ export class PrePartitaPage implements OnInit {
     this.socket.sendMessage("server: start");
     this.chat=false;
     this.bossolo.startTimer();
-    //console.log("LEng", this.socket.socket.)
 
   }
 

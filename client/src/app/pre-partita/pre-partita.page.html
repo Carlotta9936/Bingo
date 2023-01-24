@@ -4,6 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
+<!--  CHAT  -->
 <ion-content id="chat">
 <div *ngIf="this.chat===true">
   <div *ngFor="let message of messageList">
@@ -16,6 +17,7 @@
 </div>
 <ion-button (click)="this.visualizzaChat()">CHAT</ion-button>
 
+<!-- INFO MATCH E PER IL PROPRIETARIO BOTTONI PER FAR PARTIRE LA PARTITA -->
 <div *ngIf="this.propr.proprietario===true; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
     <div *ngIf="this.iniziata===false">
@@ -33,8 +35,7 @@
 </ion-content>
 <app-schede></app-schede>
 
-
-
+<!--  CONTROLLI PER CHIUDERE LA PARTITA -->
 <ion-content>
   <ion-tabs>
     <div *ngIf="this.propr.proprietario===false; then thenBlock1 else elseBlock1"></div>
