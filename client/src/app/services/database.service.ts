@@ -77,19 +77,6 @@ export class DatabaseService {
     })
     return codicePromise;
   } 
-
-  /** Metodi per partita
-    * ! Metodo da togliere
-  */
-  public aggiornaPartita(partita: Partita): void{
-    set(ref(this.database, 'game/'+'AAA'), {
-      ultimoNumero: partita.ultimoNumero, 
-      numeriEstratti: partita.numeriEstratti+1,
-      cinquina: partita.cinquina,
-      bingo: partita.bingo
-    })
-  }
-
   
   //Ricerca tutti le partite nel DB
   public async getPartite(): Promise<any> {
@@ -170,4 +157,17 @@ export class DatabaseService {
     });
   }
   
+  async getIPPartita(codice: string): Promise<string>{
+    const IP = new Promise<string>((resolve, reject) => {
+      const cod = ref(this.database, 'partita/'+ codice);
+      onValue(cod, (snapshot) => {
+        console.log("codice" + cod);
+        const c = snapshot.val().ip;
+        console.log(c);
+        resolve(c);
+      }); 
+    })
+
+    return IP
+  }
 }

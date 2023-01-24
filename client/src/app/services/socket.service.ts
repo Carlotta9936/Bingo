@@ -11,10 +11,11 @@ export class SocketService {
   ipAddress: string = "";
 
   constructor() {
-    this.setIP();
+    //this.setIP();
   }
-  async setIP(): Promise<void> {
-    this.ipAddress = await this.getIPAddress();
+  async setIP(ip: string): Promise<void> {
+    //this.ipAddress = await this.getIPAddress();
+    this.ipAddress = ip;
   }
 
   async getIPAddress(): Promise<any> {

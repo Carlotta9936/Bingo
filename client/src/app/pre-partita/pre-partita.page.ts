@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AlertService } from '../services/alert.service';
@@ -27,6 +27,8 @@ export class PrePartitaPage implements OnInit {
 
   obs?: Subscription;
 
+  @Input() ip: string = "";
+
   constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, 
     private database: DatabaseService, private router: Router, private socket: SocketService, 
     public alert: AlertService, public auth: AuthService, public propr: ProprietarioService,
@@ -34,6 +36,10 @@ export class PrePartitaPage implements OnInit {
 
   ngOnInit() {
     this.codice=this.crea.getCodiceUrl();
+    this.database.getIPPartita(this.codice).then((promise) => {
+      console.log("P>ROMISW£", promise);
+      this.socket.setIP(promise);
+    })
     this.controllaProprietario();  
     this.messaggi();
     this.socket.stanza(this.codice,this.auth.get("user"));
