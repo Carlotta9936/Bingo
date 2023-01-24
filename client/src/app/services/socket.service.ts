@@ -32,11 +32,18 @@ export class SocketService {
 
   public getNewMessage = () => {
     this.socket.on('message', (message) =>{
-      console.log()
       this.message$.next(message);
     });
     return this.message$.asObservable();
+
+    //const message = new Observable<number>
+    //this.socket.on('message', )
   };
+
+  public stopRead = () => {
+    console.log("STOP");
+    //this.message$.unsubscribe();
+  }
 
   public estraiNumero(numero: number, room: string): void{
     this.socket.emit('message', 'Estratto: ' + numero);

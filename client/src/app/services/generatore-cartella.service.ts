@@ -10,7 +10,7 @@ export class GeneratoreCartellaService {
 
   //Get numeri zero compresi
   getNumeri(): any{
-    return this.aggiungiCaselleVuote(this.getNumeriCasuali());
+    return this.getNumeriCasuali();
   }
 
   //Estrazione dei numeri
@@ -52,11 +52,7 @@ export class GeneratoreCartellaService {
     let limiteInf: number = Math.floor(numero/10)*10;
     let limiteSup: number = Math.floor(numero/10)*10+9;
     let count: number = 0;
-    
-    //console.log(numero, "Inf:", limiteInf, "sup:", limiteSup);
-    //console.log(numero, Math.ceil(numero/10)*10, Math.ceil(numero/10)*10-1);
     numeri.forEach((n: number) => {
-      //console.log(n, "Inf:", limiteInf, "sup:", limiteSup);
       if(n === 90){
         n--;
       }
@@ -64,8 +60,6 @@ export class GeneratoreCartellaService {
         count++;
       }
     })
-    
-    //console.log("Count of", limiteInf, ":", count);
     return count;
   }
   
@@ -100,20 +94,15 @@ export class GeneratoreCartellaService {
       if(n===90){    //Se è 90 lo aggiungiamo, sicuramente è l'ultimo numero
         numeriConZero.push(90);
       } else {
-        //console.log( Math.floor(n), "!=", indexNumeri, Math.floor(n/10) !== indexNumeri);
         //Controllo se sto guardando un altra decina (indexNumeri)
         if(Math.floor(n/10) !== indexNumeri){
-            //console.log("=", count, "+ (3*" ,Math.floor(n/10), "-", indexNumeri, "+1" )
             let zeri = count + (3 * (Math.floor(n/10) - indexNumeri - 1))
-            //console.log("Aggiungo", zeri);
             for(let i=zeri; i>=1; i--){
-              //console.log("Aggiungo zero per ", Math.floor(n/10), indexNumeri);
               numeriConZero.push(0);
             }
             numeriConZero.push(n);
             indexNumeri = Math.floor(n/10);
             count=2;
-         // }
         } else {
           numeriConZero.push(n);
           count--;
@@ -140,7 +129,7 @@ export class GeneratoreCartellaService {
     matrice[2] = []
 
     let index: number = 0;
-    //Sistemo tutti i numeri in una matrice 9x3
+    //Sistemo tutti i numeri in una matrice 9x3, che è la grandezza della cartella
     for(let j = 0; j < 9; j++){
       for(let i = 0; i < 3; i++){
         matrice[i][j] = numeri[index];
@@ -162,22 +151,21 @@ export class GeneratoreCartellaService {
     return numeri;
   }
 
-  //Magheggi
-  //Sistema le bianche
+  //Sistema le caselle bianche
   sistemaBianche(matrice: number[][]): number[][] {
-    //Sistemo la seconda riga, ì per gli umani è la terza
+    //Sistemo la seconda riga, per gli umani è la terza
     let contaBianche = 0;
     let colonne: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
     //Controllo quanti zeri ha l'ultima riga
-    matrice[2].forEach((n: number) => {
-      if(n === 0){
-        contaBianche++;
-      }
-    })
-    console.log("I:", contaBianche);
+    contaBianche = this.contaBianche(matrice[2]);
 
-
+  /*
+    * Sistemo l'ultima riga, facendo in modo che abbia 4 caselle bianche (e di conseguenza 5 con numero)
+    * Estraggo un numero a caso che è la riga su cui andiamo a lavorare, se l'ultima riga a quall'indice
+    * ha zero proviamo a scambiarlo con il numero della riga sopra (matrice[1]), se anche quello è zero proviamo 
+    * con la prima, se anche quella è vuota aggiungiamo un giro al for, perché questo è andato a vuoto
+  */    
     for(let i = contaBianche; i > 4; i--){
       let index = Math.floor(Math.random() * (colonne.length));
       console.log(index, colonne, colonne[index]);
@@ -198,14 +186,10 @@ export class GeneratoreCartellaService {
       }
     }
 
-    contaBianche = 0;
+    //Sistemo la riga al centro, matrice[1]
+    contaBianche = this.contaBianche(matrice[1]);
     colonne = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-    matrice[1].forEach((n: number) => {
-      if(n === 0){
-        contaBianche++;
-      }
-    })
     for(let i = contaBianche; i > 4; i--){
       let index = Math.floor(Math.random() * (colonne.length));
       if(matrice[1][colonne[index]] === 0){
@@ -224,13 +208,35 @@ export class GeneratoreCartellaService {
     return matrice;
   }
 
+  //Conteggio delle caselle bianche
+  contaBianche(riga: number[]): number {
+    let bianche = 0;
+    riga.forEach((n: number) => {
+      if(n === 0){
+        bianche++;
+      }
+    })
+
+    return bianche;
+  }
+
   //Estrazione cinquine
+  estrazioneCinquine(riga: number[]): number[] {
+    let cinquina: number[] = [];
+    riga.forEach((n: number) => {
+      if(n!==0){
+        cinquina.push(n);
+      }
+    })
+    return cinquina;
+  }
 
   //Get Cartelle
   getCartella(): any {
     let numeri: number[] = this.getNumeri();
-    let matrice = this.sistemaBianche(this.transformaMatrice(numeri));
-    return this.transformaArray(matrice);
+    let matrice = this.sistemaBianche(this.transformaMatrice(this.aggiungiCaselleVuote(numeri)));
+    //Ritorna tutti i numeri per la cartella, i numeri senza gli zeri per il bingo, e le tre cinquine
+    return [this.transformaArray(matrice), numeri, this.estrazioneCinquine(matrice[0]), this.estrazioneCinquine(matrice[1]), this.estrazioneCinquine(matrice[2])];
   }
 
 }

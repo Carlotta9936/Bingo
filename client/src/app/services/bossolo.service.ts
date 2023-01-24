@@ -15,29 +15,29 @@ export class BossoloService {
   timeLeft: number = 1;
   interval?: any;
 
+  speaker: any;
+
   constructor(public socket: SocketService, 
               public auth: AuthService //per test
     ){
     //creo un array con tutti i numeri estraibili 
-    //e inizializzo il tabellone a true
-      for(let i=1;i<91;i++){
-        this.bossolo.push(i);
-        this.tabellone.push(false);
-      }
-      console.log(this.tabellone);
+    //e inizializzo il tabellone a false
+      console.log("CREO UN TABELLONE");
+      this.tabelloneVuoto();
    }
 
+   tabelloneVuoto():  any{
+    this.tabellone = [];
+    this.bossolo = [];
+    for(let i=1;i<91;i++){
+      this.bossolo.push(i);
+      this.tabellone.push(false);
+    }
+    console.log("Tab", this.tabellone)
+   } 
 
    estraiNumero(): number{
     return Math.floor(Math.random() * (this.bossolo.length));
-    
-   /* 
-    let numero= this.bossolo[index];
-    this.segnaNumero(numero);
-    console.log("estratto "+ index+ " numero"+ numero);
-    console.log("bossolo"+this.bossolo);
-    this.bossolo.splice(index,1);
-    return numero;*/
   }
 
 
@@ -57,16 +57,16 @@ export class BossoloService {
           this.estrazione();
         }
       }else{
-        this.stopTimer;
+        this.stopTimer();
       }
     },1000)
   }
 
   stopTimer(): void{
     clearInterval(this.interval);
+
   }
 
-  
   segnaNumero(numero: any): void{
     this.tabellone[numero]=true;
   }
@@ -80,12 +80,16 @@ export class BossoloService {
 
   ritornaNumero(): Observable<number>{
     const numeroEstratto=new Observable<number>((observer)=>{
-      setInterval(() => {
-        let numero=Number(this.estratto);
-        console.log("NuMeRo", numero);
-        observer.next(numero);
+      this.speaker = setInterval(() => {
+        //let numero=Number(this.estratto);
+        console.log("NuMeRo", this.tabellone[Number(this.estratto)] );
+        observer.next(this.bossolo[Number(this.estratto)]);
       }, 1000)
     })
     return numeroEstratto;
+  }
+
+  spegniSpeaker(): void{
+    clearInterval(this.speaker);
   }
 }

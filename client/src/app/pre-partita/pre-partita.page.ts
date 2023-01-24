@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AlertService } from '../services/alert.service';
 import { AuthService } from '../services/auth.service';
 import { BossoloService } from '../services/bossolo.service';
@@ -23,6 +24,8 @@ export class PrePartitaPage implements OnInit {
   newMessage?: string;
   messageList: string[] = [];
   chat: boolean= true;
+
+  obs?: Subscription;
 
   constructor(public crea: CreaPartitaService, public elimina: EliminaPartitaService, private route: ActivatedRoute, 
     private database: DatabaseService, private router: Router, private socket: SocketService, 
@@ -57,7 +60,7 @@ export class PrePartitaPage implements OnInit {
   }
 
   public messaggi():void{
-    this.socket.getNewMessage().subscribe((message: string) => {
+    this.obs = this.socket.getNewMessage().subscribe((message: string) => {
       if(message!=""){
         if(message.includes("Estratto")){
           let messaggio = message.split(": ");
@@ -98,6 +101,7 @@ export class PrePartitaPage implements OnInit {
 
   public sendMessage():void {
     this.socket.sendMessage(this.auth.get("user")+': '+this.newMessage);
+    console.log("S")
     this.newMessage = '';
   }
 
@@ -105,6 +109,7 @@ export class PrePartitaPage implements OnInit {
     this.socket.sendMessage("server: start");
     this.chat=false;
     this.bossolo.startTimer();
+    //console.log("LEng", this.socket.socket.)
 
   }
 
@@ -123,7 +128,7 @@ export class PrePartitaPage implements OnInit {
     });
     this.messageList=[];
   }
-
+  
   public visualizzaChat():void{
     if(this.chat==true){
       this.chat=false;
@@ -131,5 +136,12 @@ export class PrePartitaPage implements OnInit {
       this.chat=true;
     }
 
+  }
+
+  public stopSub(){
+    console.log("STOP SUB")
+    //this.obs?.unsubscribe();
+    this.socket.socket.removeAllListeners();
+    
   }
 }
